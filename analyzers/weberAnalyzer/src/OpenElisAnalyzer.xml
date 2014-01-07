@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openElisGlobalPlugin>
+<version>1.0</version>
+<analyzerImporter>
+<extention_point path="us.mn.state.health.lims.plugin.AnalyzerImporterPlugin" >
+	<extention path="oe.plugin.analyzer.WeberAnalyzer" />	
+	<description value="Just a made up analyzer" />
+</extention_point>
+</analyzerImporter>
+<menu>
+    <extention_point path="us.mn.state.health.lims.plugin.MenuPlugin" >
+	<extention path="oe.plugin.analyzer.WeberMenu" />	
+	<description value="Menu for Weber Analyzer" />
+</extention_point>
+</menu>
+</openElisGlobalPlugin>
