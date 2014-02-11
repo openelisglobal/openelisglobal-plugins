@@ -2,15 +2,21 @@
 <openElisGlobalPlugin>
 <version>1.0</version>
 <analyzerImporter>
-<extention_point path="us.mn.state.health.lims.plugin.AnalyzerImporterPlugin" >
-	<extention path="oe.plugin.analyzer.WeberAnalyzer" />	
-	<description value="Just a made up analyzer" />
-</extention_point>
+<extension_point path="us.mn.state.health.lims.plugin.AnalyzerImporterPlugin" >
+	<extension path="oe.plugin.analyzer.WeberAnalyzer" />
+	<description value="Weber analyzer importer" />
+</extension_point>
 </analyzerImporter>
 <menu>
-    <extention_point path="us.mn.state.health.lims.plugin.MenuPlugin" >
-	<extention path="oe.plugin.analyzer.WeberMenu" />	
-	<description value="Menu for Weber Analyzer" />
-</extention_point>
+    <extension_point path="us.mn.state.health.lims.plugin.MenuPlugin" >
+	<extension path="oe.plugin.analyzer.WeberMenu" />
+	<description value="Weber Analyzer menu" />
+</extension_point>
 </menu>
+<permission>
+    <extension_point path="us.mn.state.health.lims.plugin.PermissionPlugin" >
+        <extension path="oe.plugin.analyzer.WeberPermission" />
+        <description value="Weber Analyzer permission" />
+    </extension_point>
+</permission>
 </openElisGlobalPlugin>

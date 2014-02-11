@@ -31,14 +31,20 @@ public class WeberMenu extends MenuPlugin {
         Menu menu = new Menu();
 		
 		menu.setParent(PluginMenuService.getInstance().getKnownMenu(KnownMenu.ANALYZER, "menu_results"));
+		//The order this analyzer will show on the menu relative to other analyzers
 		menu.setPresentationOrder(5);
+		//The id needs to be unique in the system
 		menu.setElementId("weber_analyzer_plugin");
+		//This will always be "/AnalyzerResults.do?type=<The name of the analyzer in the database as specified in then Analyzer class call to addAnalyzerDatabaseParts(....) 
 		menu.setActionURL("/AnalyzerResults.do?type=WeberAnalyzer");
+		//The key used for the name of the analyzer on the menu.  Should not already exist in MessageResource.properties.
 		menu.setDisplayKey("banner.menu.results.weber");
 		menu.setOpenInNewWindow(false);
 
         service.addMenu(menu);
+		//Analyzer name in English
         service.insertLanguageKeyValue("banner.menu.results.weber","Weber 4000", ConfigurationProperties.LOCALE.ENGLISH.getRepresentation());
+		//Analyzer name in French
         service.insertLanguageKeyValue("banner.menu.results.weber","La Weber 4000", ConfigurationProperties.LOCALE.FRENCH.getRepresentation());
 	}
 	
