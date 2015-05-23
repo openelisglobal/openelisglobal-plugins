@@ -1,14 +1,4 @@
-/* Skip to content
-Sign up Sign in This repository
-Explore
-Features
-Enterprise
-Blog
- Watch 4  Star 0  Fork 4 openelisglobal/openelisglobal-plugins
- branch: develop  openelisglobal-plugins/analyzers/weberAnalyzer/src/oe/plugin/analyzer/WeberAnalyzerImplementation.java
-@pfschwartzpfschwartz on 7 Jan 2014 added copyright to files
-1 contributor
-RawBlameHistory     203 lines (169 sloc)  9.134 kb
+
 /*
  * The contents of this file are subject to the Mozilla Public License
  * Version 1.1 (the "License"); you may not use this file except in
@@ -117,19 +107,21 @@ public class FacsCaliburImplementation extends AnalyzerLineInserter {
     private static String[] unitsIndex = new String[columns];
 
     {
-        //must be active if the site generate result for CD3 test
-        //testNameIndex[Avg_CD3__per_Lymph] = "CD3_PER";
-        //testNameIndex[Avg_CD3__Abs_Cnt] = "CD3_ABS";
+        /* must be active if the site generate result for CD3 test
+        testNameIndex[Avg_CD3__per_Lymph] = "CD3_PER";
+        testNameIndex[Avg_CD3__Abs_Cnt] = "CD3_ABS";
+        */        
         testNameIndex[Avg_CD3_CD4__per_Lymph] = "CD4_PER";
         testNameIndex[Avg_CD3_CD4__Abs_Cnt] = "CD4_ABS";
 
-       // unitsIndex[Avg_CD3__per_Lymph] = "%";
-       // unitsIndex[Avg_CD3__Abs_Cnt] = "/mm3";
+        /* must be active if the site generate result for CD3 test
+        unitsIndex[Avg_CD3__per_Lymph] = "%";
+        unitsIndex[Avg_CD3__Abs_Cnt] = "/mm3";
+        */
+        
         unitsIndex[Avg_CD3_CD4__per_Lymph] = "%";
         unitsIndex[Avg_CD3_CD4__Abs_Cnt] = "/mm3";
-      //Test test = new TestDAOImpl().getTestByGUID("CD4 PER");
-      // CD4_TestID = test.getId();
-           }
+      }
 
     @Override
     public boolean insert(List<String> lines, String currentUserId) {
@@ -206,7 +198,7 @@ public class FacsCaliburImplementation extends AnalyzerLineInserter {
         return DateUtil.convertStringDateToTimestampWithPattern(date, ALT_DATE_PATTERN);
     }
 
-    //The analyzer is sending abbreviated months without the '.'
+
     private String getCorrectedMonth(String month) {
         if( month.endsWith(".") || month.equals("mars") || month.equals("mai") || month.equals("juin") || month.equals("août") ){
             return month;
@@ -219,7 +211,3 @@ public class FacsCaliburImplementation extends AnalyzerLineInserter {
         return "FacsCalibur analyzer unable to write to database";
     }
 }
-//Status API Training Shop Blog About
-//© 2015 GitHub, Inc. Terms Privacy Security Contact
-
-

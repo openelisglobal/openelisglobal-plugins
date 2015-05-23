@@ -31,8 +31,15 @@ public class FacsCalibur implements AnalyzerImporterPlugin {
 
     public boolean connect(){
         List<PluginAnalyzerService.TestMapping> nameMappinng = new ArrayList<PluginAnalyzerService.TestMapping>();
-        //nameMappinng.add(new PluginAnalyzerService.TestMapping("CD3_ABS", "CD3 en Valeur Absolu"));
-        //nameMappinng.add(new PluginAnalyzerService.TestMapping("CD3_PER", "CD3 en %"));
+        
+        /* 
+        -- Make it active if we need select CD3 values
+        
+        nameMappinng.add(new PluginAnalyzerService.TestMapping("CD3_ABS", "CD3 en Valeur Absolu"));
+        nameMappinng.add(new PluginAnalyzerService.TestMapping("CD3_PER", "CD3 en %"));
+                
+        */
+        
         nameMappinng.add(new PluginAnalyzerService.TestMapping("CD4_ABS", "Dénombrement des lymphocytes CD4 (mm3)"));
         nameMappinng.add(new PluginAnalyzerService.TestMapping("CD4_PER", "Dénombrement des lymphocytes  CD4 (%)"));
         getInstance().addAnalyzerDatabaseParts("FacsCalibur", "Plugin for FacsCalibur",nameMappinng);
