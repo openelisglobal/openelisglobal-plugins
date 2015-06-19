@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openElisGlobalPlugin>
+<version>1.0</version>
+<analyzerImporter>
+<extension_point path="us.mn.state.health.lims.plugin.AnalyzerImporterPlugin" >
+	<extension path="oe.plugin.analyzer.SysmexXT4000Analyzer" />
+	<description value="Hématologie: Sysmex XT 4000i analyzer importer" />
+</extension_point>
+</analyzerImporter>
+<menu>
+    <extension_point path="us.mn.state.health.lims.plugin.MenuPlugin" >
+	<extension path="oe.plugin.analyzer.SysmexXT4000Menu" />
+	<description value="Hématologie: Sysmex XT 4000i Analyzer menu" />
+</extension_point>
+</menu>
+<permission>
+    <extension_point path="us.mn.state.health.lims.plugin.PermissionPlugin" >
+        <extension path="oe.plugin.analyzer.SysmexXT4000Permission" />
+        <description value="Hématologie: Sysmex XT 4000i Analyzer permission" />
+    </extension_point>
+</permission>
+</openElisGlobalPlugin>
