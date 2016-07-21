@@ -216,7 +216,7 @@ public class SysmeXTImplementation extends AnalyzerLineInserter {
 
 	private static final String DELIMITER = ",";
 
-	private static final String DATE_PATTERN = "dd/MM/yyyy HH:mm:ss";
+	private static final String DATE_PATTERN = "yyyy/MM/dd HH:mm:ss";
 	private static String[] testNameIndex = new String[columns];
 	private static String[] unitsIndex = new String[columns];
 	private static Boolean[] readOnlyIndex = new Boolean[columns];
@@ -290,7 +290,7 @@ public class SysmeXTImplementation extends AnalyzerLineInserter {
 		scaleIndex[PLQ_10_3_uL] = 1;
 		scaleIndex[NEUT_COUNT_10_uL] = 100;
 		scaleIndex[MONO_COUNT_10_uL] = 100;
-		scaleIndex[BASO_COUNT_10_uL] = 10;
+		scaleIndex[BASO_COUNT_10_uL] = 100;
 		scaleIndex[LYMPH_COUNT_10_uL] = 100;
 		scaleIndex[EO_COUNT_10_uL] = 100;
     
@@ -354,9 +354,10 @@ public class SysmeXTImplementation extends AnalyzerLineInserter {
 		String[] fields = line.split(DELIMITER);
 
 		AnalyzerReaderUtil readerUtil = new AnalyzerReaderUtil();
-		String analyzerAccessionNumber = fields[ACCESSION];
-		Timestamp timestamp = DateUtil.convertStringDateToTimestampWithPattern(fields[DATE] + " " + fields[TIME], DATE_PATTERN);
-
+		String analyzerAccessionNumber = fields[ID_PATIENT];
+		//Timestamp timestamp = DateUtil.convertStringDateToTimestampWithPattern(fields[DATE] + " " + fields[TIME], DATE_PATTERN);
+                 Timestamp timestamp = DateUtil.convertStringDateToTimestampWithPattern(fields[DATE] + " " + fields[TIME], DATE_PATTERN);   
+                
 		List<AnalyzerResults> readOnlyResults = new ArrayList<AnalyzerResults>();
 
 		//the reason for the indirection is to get the order of tests correct

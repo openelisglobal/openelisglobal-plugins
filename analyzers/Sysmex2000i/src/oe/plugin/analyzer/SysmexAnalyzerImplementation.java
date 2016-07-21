@@ -37,13 +37,14 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import us.mn.state.health.lims.common.services.PluginAnalyzerService;
 
 
 public class SysmexAnalyzerImplementation extends AnalyzerLineInserter {
     
 	static String ANALYZER_ID;
-	static String DATE_PATTERN = "dd/MM/yyyy HH:mm:ss";
-        
+	//static String DATE_PATTERN = "dd/MM/yyyy HH:mm:ss";
+        static String DATE_PATTERN = "dd/MM/yyyy";
         
         private static final String CONTROL_ACCESSION_PREFIX = "QC-";
         private static final String[] units = new String[100];
@@ -58,36 +59,38 @@ public class SysmexAnalyzerImplementation extends AnalyzerLineInserter {
 	static HashMap<String, Test> testHeaderNameMap = new HashMap<String, Test>();
         static HashMap<String, String> testUnitMap = new HashMap<String, String>();
 	HashMap<String, String> indexTestMap = new HashMap<String, String>();
+        List<PluginAnalyzerService.TestMapping> nameMappinng = new ArrayList<PluginAnalyzerService.TestMapping>();
     
 	static{
 		
-		testHeaderNameMap.put("GB(10/uL)", new TestDAOImpl().getTestByGUID("d3b227d6-53ce-4402-bb0b-8f271e3b27e6"));
-		testHeaderNameMap.put("GR(10^4/uL)", new TestDAOImpl().getTestByGUID("fdae85ea-3034-43af-9e11-55d5032256b5"));
-		testHeaderNameMap.put("HBG(g/L)", new TestDAOImpl().getTestByGUID("781848ae-ada5-465c-9a19-d941dd424962"));
-		testHeaderNameMap.put("HCT(10^(-1)%)", new TestDAOImpl().getTestByGUID("dacf059a-bf70-48a6-849a-28d462087f6e"));
-		testHeaderNameMap.put("VGM(10^(-1)fL)", new TestDAOImpl().getTestByGUID("29736377-dd22-42bb-b3ba-2d1e5db8549f"));
-		testHeaderNameMap.put("TCMH(10^(-1)pg)", new TestDAOImpl().getTestByGUID("092a766e-6549-4838-a96f-7bfbc547b06d"));
-		testHeaderNameMap.put("CCMH(g/L)", new TestDAOImpl().getTestByGUID("42d607b3-8283-41ba-9d33-927e31a9f2a4"));
-		testHeaderNameMap.put("PLQ(10^3/uL)", new TestDAOImpl().getTestByGUID("a5ac2b5d-d958-419e-ab48-69328adc74a3"));
-		testHeaderNameMap.put("NEUT#(10/uL)", new TestDAOImpl().getTestByGUID("82172296-a86f-4d90-b2d8-cbd1fe089df7"));
-                testHeaderNameMap.put("NEUT%(10^(-1)%)", new TestDAOImpl().getTestByGUID("37f96e86-6036-4710-83f6-325f0b815d24"));
-                testHeaderNameMap.put("LYMPH#(10/uL)", new TestDAOImpl().getTestByGUID("d5325b4c-6e38-4214-84cc-6eb3026f653a"));
-		testHeaderNameMap.put("LYMPH%(10^(-1)%)", new TestDAOImpl().getTestByGUID("03074da7-5f1b-41ed-ba29-f4c22276f3cc"));
-		testHeaderNameMap.put("MONO#(10/uL)", new TestDAOImpl().getTestByGUID("d6ddad61-a22e-471f-af05-a0b3e367c776"));
-		testHeaderNameMap.put("MONO%(10^(-1)%)", new TestDAOImpl().getTestByGUID("751a0897-d8a5-4c89-910c-12244193599f"));
-		testHeaderNameMap.put("EO#(10/uL)", new TestDAOImpl().getTestByGUID("30d037e5-fa9e-4bb3-ae42-8c098e1536b4"));
-		testHeaderNameMap.put("EO%(10^(-1)%)", new TestDAOImpl().getTestByGUID("77d0d185-9e43-4f6a-bd11-3c34e4419a26"));
-		testHeaderNameMap.put("BASO#(10/uL)", new TestDAOImpl().getTestByGUID("e21958b9-17b6-41c6-bfb9-e1017cad627b"));
-		testHeaderNameMap.put("BASO%(10^(-1)%)", new TestDAOImpl().getTestByGUID("7864e487-94d4-4f2a-9a14-87fdf4814f26"));
-
-		System.out.println(testHeaderNameMap);
-		
+		testHeaderNameMap.put("GB(10/uL)", new TestDAOImpl().getTestByName("Numération des globules blancs"));
+                testHeaderNameMap.put("GR(10^4/uL)", new TestDAOImpl().getTestByName("Numération des globules rouges"));
+                testHeaderNameMap.put("HBG(g/L)", new TestDAOImpl().getTestByName("Hémoglobine"));
+                testHeaderNameMap.put("HCT(10^(-1)%)", new TestDAOImpl().getTestByName("Hématocrite"));
+                testHeaderNameMap.put("VGM(10^(-1)fL)", new TestDAOImpl().getTestByName("Volume Globulaire Moyen"));
+                testHeaderNameMap.put("TCMH(10^(-1)pg)", new TestDAOImpl().getTestByName("Teneur Corpusculaire Moyenne en Hémoglobine"));
+                testHeaderNameMap.put("CCMH(g/L)", new TestDAOImpl().getTestByName("Concentration Corpusculaire Moyenne en Hémoglobine"));
+                testHeaderNameMap.put("PLQ(10^3/uL)", new TestDAOImpl().getTestByName("Plaquette"));
+                testHeaderNameMap.put("NEUT#(10/uL)", new TestDAOImpl().getTestByName("Polynucléaires Neutrophiles (Abs)"));
+                testHeaderNameMap.put("LYMPH#(10/uL)", new TestDAOImpl().getTestByName("Lymphocytes (Abs)"));
+                testHeaderNameMap.put("MONO#(10/uL)", new TestDAOImpl().getTestByName("Monocytes (Abs)"));
+                testHeaderNameMap.put("EO#(10/uL)", new TestDAOImpl().getTestByName("Polynucléaires Eosinophiles (Abs)"));
+                testHeaderNameMap.put("BASO#(10/uL)", new TestDAOImpl().getTestByName("Polynucléaires basophiles (Abs)"));
+                testHeaderNameMap.put("NEUT%(10^(-1)%)", new TestDAOImpl().getTestByName("Polynucléaires Neutrophiles (%)"));
+                testHeaderNameMap.put("LYMPH%(10^(-1)%)", new TestDAOImpl().getTestByName("Lymphocytes (%)"));
+                testHeaderNameMap.put("MONO%(10^(-1)%)", new TestDAOImpl().getTestByName("Monocytes (%)"));
+                testHeaderNameMap.put("EO%(10^(-1)%)", new TestDAOImpl().getTestByName("Polynucléaires Eosinophiles (%)"));
+                testHeaderNameMap.put("BASO%(10^(-1)%)", new TestDAOImpl().getTestByName("Polynucléaires basophiles (%)"));
+                
+                System.out.println(testHeaderNameMap);
 		AnalyzerDAO analyzerDAO = new AnalyzerDAOImpl();
 		Analyzer analyzer = analyzerDAO.getAnalyzerByName("SysmexAnalyzer");
 		ANALYZER_ID = analyzer.getId();
 		
 		
-	}
+	} 
+       
+        
         static{
 		
                 testUnitMap.put("GB(10/uL)", "/100|10^3/uL");
@@ -96,8 +99,8 @@ public class SysmexAnalyzerImplementation extends AnalyzerLineInserter {
                 testUnitMap.put("HCT(10^(-1)%)", "/10|%");
 		testUnitMap.put("VGM(10^(-1)fL)", "/10|fl");
                 testUnitMap.put("TCMH(10^(-1)pg)", "/10|pg");
-                testUnitMap.put("CCMH(g/L)", "/10|10^3/uL");
-		testUnitMap.put("PLQ(10^3/uL)", "/1|g/dL");
+                testUnitMap.put("CCMH(g/L)", "/10|g/dL");
+		testUnitMap.put("PLQ(10^3/uL)", "/1|10^3/uL");
                 testUnitMap.put("NEUT#(10/uL)", "/100|10^3/uL");
 		testUnitMap.put("NEUT%(10^(-1)%)", "/10|%");
                 testUnitMap.put("LYMPH#(10/uL)", "/100|10^3/uL");
@@ -106,13 +109,10 @@ public class SysmexAnalyzerImplementation extends AnalyzerLineInserter {
 		testUnitMap.put("MONO%(10^(-1)%)", "/10|%");
                 testUnitMap.put("EO#(10/uL)", "/100|10^3/uL");
 		testUnitMap.put("EO%(10^(-1)%)", "/10|%");
-                testUnitMap.put("BASO#(10/uL)", "/10|10^3/uL");
+                testUnitMap.put("BASO#(10/uL)", "/100|10^3/uL");
 		testUnitMap.put("BASO%(10^(-1)%)", "/10|%");
                 
-
-		System.out.println(testUnitMap);
-		
-		
+	System.out.println(testUnitMap);
 		
 	}
     
@@ -124,6 +124,7 @@ public class SysmexAnalyzerImplementation extends AnalyzerLineInserter {
         List<AnalyzerResults> results = new ArrayList<AnalyzerResults>();
         boolean readData = false;
         int accessionNumberIndex = -1;
+        int accessionNumberIndex2 = -1;
         int hourIndex = -1;
         int dayIndex = -1;
         
@@ -134,6 +135,10 @@ public class SysmexAnalyzerImplementation extends AnalyzerLineInserter {
         		indexTestMap.put(i.toString(), headers[i]);
            	} else if ("N' Echantillon".equals(headers[i])) {
         		accessionNumberIndex = i;
+                        
+                } else if ("ID Patient".equals(headers[i])) {
+        		accessionNumberIndex2 = i;        
+                   
         	} else if ("Ana. Heure".equals(headers[i])) {
         		hourIndex = i;
         	} else if ("Ana. Jour".equals(headers[i])) {
@@ -143,10 +148,7 @@ public class SysmexAnalyzerImplementation extends AnalyzerLineInserter {
         
         for (Integer j = 1; j < lines.size(); j++) {        	
         	System.out.println("processing line #: "  + j);
-        	//String line = lines.get(j);
-        	//String[] data = line.split(",");
-                
-                line = lines.get(j);
+        	line = lines.get(j);
         	data = line.split(",");
                 
         	if (line.length() == 0 || data.length == 0) {
@@ -157,9 +159,10 @@ public class SysmexAnalyzerImplementation extends AnalyzerLineInserter {
         	String currentAccessionNumber = "";
         	
         	for (Integer k = 0; k < data.length; k++) {
+                      
                    if (indexTestMap.containsKey(k.toString())) { 
-                            
-                            	String testKey = indexTestMap.get(k.toString());
+                                                       
+                                String testKey = indexTestMap.get(k.toString());
                                 AnalyzerResults aResult = new AnalyzerResults();
                                 aResult.setTestId(testHeaderNameMap.get(testKey).getId());	        		
 	        		aResult.setTestName(testHeaderNameMap.get(testKey).getName());
@@ -170,17 +173,19 @@ public class SysmexAnalyzerImplementation extends AnalyzerLineInserter {
                                 aResult.setReadOnly(CheckReadOnly (testKey));
                                 aResult.setIsControl(CheckControl (currentAccessionNumber));
 			        aResult.setCompleteDate(getTimestampFromDate(dateTime));
+                                
 	            	
-	            	System.out.println("***" + aResult.getAccessionNumber() + " " + aResult.getCompleteDate() + " " + aResult.getResult());
+                                System.out.println("***" + aResult.getAccessionNumber() + " " + aResult.getCompleteDate() + " " + aResult.getResult());
 	            	
-                        results.add(aResult);
+                                results.add(aResult);
                         
                         
 	        		if (data[k].length() == 0) {
 	        			break;
 	        		} 
 	        	} else if (k == accessionNumberIndex) {
-	        		currentAccessionNumber = data[k].trim();
+                            if (data[k].trim().contains("CHBKE")) {    
+                                		currentAccessionNumber = data[k].trim();} else break;
 	        		if (data[k].length() == 0) {
 	        			break;
 	        		} 
@@ -196,6 +201,7 @@ public class SysmexAnalyzerImplementation extends AnalyzerLineInserter {
 	        	}
 	        	
         	}
+               
         }
         return persistImport(currentUserId, results);
     }
@@ -238,7 +244,7 @@ public class SysmexAnalyzerImplementation extends AnalyzerLineInserter {
      } 
     
    private boolean CheckControl (String AccessionPrefix){
-           
+     
             boolean IsControl= false;
                     
         if (AccessionPrefix.startsWith(CONTROL_ACCESSION_PREFIX)) {
@@ -252,14 +258,17 @@ private boolean CheckReadOnly (String testKey){
            
             boolean ReadOnly= false;
                     
-        if (testKey.equals("NEUT#(10/uL)")||testKey.equals("MONO#(10/uL)")||testKey.equals("EO#(10/uL)")||testKey.equals("BASO#(10/uL)")||testKey.equals("LYMPH#(10/uL)")) {
-                ReadOnly = true;
-		}
+        //if (testKey.equals("NEUT#(10/uL)")||testKey.equals("MONO#(10/uL)")||testKey.equals("EO#(10/uL)")||testKey.equals("BASO#(10/uL)")||testKey.equals("LYMPH#(10/uL)")) {
+       //         ReadOnly = true;
+	//	}
       return ReadOnly;
   
    }
 
-      
+    
+
+
+
         
         
     private Timestamp getTimestampFromDate(String dateTime) {

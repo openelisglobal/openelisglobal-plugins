@@ -14,7 +14,7 @@
  * Copyright (C) ITECH, University of Washington, Seattle WA.  All Rights Reserved.
  */
 
-package oe.plugin.analyzer;
+package weberanalyzer;
 
 import us.mn.state.health.lims.common.services.PluginPermissionService;
 import us.mn.state.health.lims.plugin.PermissionPlugin;

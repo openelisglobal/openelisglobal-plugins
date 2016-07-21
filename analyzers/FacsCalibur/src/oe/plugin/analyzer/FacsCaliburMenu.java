@@ -43,9 +43,9 @@ public class FacsCaliburMenu extends MenuPlugin {
 
         service.addMenu(menu);
 		//Analyzer name in English
-        service.insertLanguageKeyValue("banner.menu.results.FacsCalibur","FacsCalibur", ConfigurationProperties.LOCALE.ENGLISH.getRepresentation());
+        service.insertLanguageKeyValue("banner.menu.results.FacsCalibur","Immunology: FacsCalibur", ConfigurationProperties.LOCALE.ENGLISH.getRepresentation());
 		//Analyzer name in French
-        service.insertLanguageKeyValue("banner.menu.results.FacsCalibur","FacsCalibur", ConfigurationProperties.LOCALE.FRENCH.getRepresentation());
+        service.insertLanguageKeyValue("banner.menu.results.FacsCalibur","Immunologie: FacsCalibur", ConfigurationProperties.LOCALE.FRENCH.getRepresentation());
 	}
 	
 }

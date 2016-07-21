@@ -36,7 +36,7 @@ public class SysmeXT implements AnalyzerImporterPlugin {
         nameMappinng.add(new PluginAnalyzerService.TestMapping("GB_10_uL", "Numération des globules blancs"));
         nameMappinng.add(new PluginAnalyzerService.TestMapping("GR_100000_uL", "Numération des globules rouges"));
         nameMappinng.add(new PluginAnalyzerService.TestMapping("HBG_g_L", "Hémoglobine"));
-        nameMappinng.add(new PluginAnalyzerService.TestMapping("HCT_10_NEG_1_PER", "Hémotocrite"));
+        nameMappinng.add(new PluginAnalyzerService.TestMapping("HCT_10_NEG_1_PER", "Hématocrite"));
         nameMappinng.add(new PluginAnalyzerService.TestMapping("VGM_10_NEG_1_fL", "Volume Globulaire Moyen"));
         nameMappinng.add(new PluginAnalyzerService.TestMapping("CCMH_g_L", "Concentration Corpusculaire Moyenne en Hémoglobine"));
         nameMappinng.add(new PluginAnalyzerService.TestMapping("TCMH_10_NEG_1_pg", "Teneur Corpusculaire Moyenne en Hémoglobine"));
@@ -52,7 +52,7 @@ public class SysmeXT implements AnalyzerImporterPlugin {
         nameMappinng.add(new PluginAnalyzerService.TestMapping("EO_COUNT_10_uL", "Polynucléaires Eosinophiles (Abs)"));
         nameMappinng.add(new PluginAnalyzerService.TestMapping("BASO_COUNT_10_uL", "Polynucléaires basophiles (Abs)"));      
         
-        
+        //SysmeXT
         getInstance().addAnalyzerDatabaseParts("SysmeXT", "Plugin for SysmeXTi",nameMappinng);
         getInstance().registerAnalyzer(this);
         return true;
@@ -60,7 +60,7 @@ public class SysmeXT implements AnalyzerImporterPlugin {
 
     @Override
     public boolean isTargetAnalyzer(List<String> lines) {
-        return lines.get(1) != null && lines.get(1).contains("XT-");
+        return lines.get(1) != null && lines.get(8).contains("60272");
     }
 
     @Override
