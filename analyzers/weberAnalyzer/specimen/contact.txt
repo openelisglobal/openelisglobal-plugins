@@ -1,0 +1,2 @@
+This is an example analyzer plugin.  So far as I know there is no analyzer named Weber.  However there is a company which make barbecues named Weber.
+For more infor contact pfschwartz@gmail.com 
