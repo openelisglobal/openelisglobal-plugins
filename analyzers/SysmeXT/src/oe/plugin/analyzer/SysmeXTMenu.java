@@ -43,9 +43,9 @@ public class SysmeXTMenu extends MenuPlugin {
 
         service.addMenu(menu);
 		//Analyzer name in English
-        service.insertLanguageKeyValue("banner.menu.results.SysmeXT","immunology:SysmeXTi", ConfigurationProperties.LOCALE.ENGLISH.getRepresentation());
+        service.insertLanguageKeyValue("banner.menu.results.SysmeXT","Hematology: SysmeXT 2000i", ConfigurationProperties.LOCALE.ENGLISH.getRepresentation());
 		//Analyzer name in French
-        service.insertLanguageKeyValue("banner.menu.results.SysmeXT","immunologie:SysmeXTi", ConfigurationProperties.LOCALE.FRENCH.getRepresentation());
+        service.insertLanguageKeyValue("banner.menu.results.SysmeXT","Hematologie: SysmeXT 2000i", ConfigurationProperties.LOCALE.FRENCH.getRepresentation());
 	}
 	
 }

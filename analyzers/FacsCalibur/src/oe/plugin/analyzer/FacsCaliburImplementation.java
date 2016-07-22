@@ -29,8 +29,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FacsCaliburImplementation extends AnalyzerLineInserter {
-    private static final String CONTROL_ACCESSION_PREFIX = "IMM";
-
+    //private static final String CONTROL_ACCESSION_PREFIX = "CONTROLE";
+    private static final String CONTROL_ACCESSION_PREFIX2 = "IC";
+    private static final String CONTROL_ACCESSION_PREFIX = "LC";
+    private static final String CONTROL_ACCESSION_PREFIX3 = "QC-";
+    
+    
     private static int index = 0;
     private static final int Institution = index++;
     private static final int Director = index++;
@@ -101,10 +105,15 @@ public class FacsCaliburImplementation extends AnalyzerLineInserter {
     //private String CD4_TestID = "null";
     private static final String DELIMITER = "\t";
 
-    private static final String DATE_PATTERN = "dd-MMM-yy kk:mm:ss";
-    private static final String ALT_DATE_PATTERN = "EEE dd MMM yyyy";
+    //private static final String DATE_PATTERN = "dd/MM/yyyy kk:mm";
+    //private static final String DATE_PATTERN = "EEE,MMM dd, yyyy kk:mm";
+   private static final String DATE_PATTERN = "EEE dd MMM yyyy kk:mm";
+   // private static final String ALT_DATE_PATTERN = "dd MMM yyyy";
+   // private static final String ALT_DATE_PATTERN = "MMM dd,. yyyy kk:mm";
+    private static final String ALT_DATE_PATTERN = "dd MMM. yyyy kk:mm";
     private static String[] testNameIndex = new String[columns];
     private static String[] unitsIndex = new String[columns];
+    private String analyzerAccessionNumber;
 
     {
         /* must be active if the site generate result for CD3 test
@@ -138,8 +147,8 @@ public class FacsCaliburImplementation extends AnalyzerLineInserter {
         String[] fields = line.split(DELIMITER);
 
         AnalyzerReaderUtil readerUtil = new AnalyzerReaderUtil();
-        String analyzerAccessionNumber = fields[Sample_ID];
-
+        //String analyzerAccessionNumber = fields[Sample_ID];
+        String analyzerAccessionNumber = fields[Sample_Name];
         String date = fields[Collection_Date];
 
         for (int i = 0; i < testNameIndex.length; i++) {
@@ -154,6 +163,10 @@ public class FacsCaliburImplementation extends AnalyzerLineInserter {
 
                 analyzerResults.setAnalyzerId(mappedName.getAnalyzerId());
 
+                //------------------------------------------------
+          if (analyzerAccessionNumber.contains("CHRA")||analyzerAccessionNumber.contains("IL")||analyzerAccessionNumber.contains("IC")||analyzerAccessionNumber.contains("QC-")) {      
+             
+                //---------------------------------------
                 String result = fields[i];
 
                 analyzerResults.setResult(result);
@@ -177,6 +190,7 @@ public class FacsCaliburImplementation extends AnalyzerLineInserter {
                 if( resultFromDB != null){
                     results.add(resultFromDB);
                 }
+          }
             }
         }
     }
@@ -184,18 +198,20 @@ public class FacsCaliburImplementation extends AnalyzerLineInserter {
     private Timestamp getTimestampFromDate(String dateTime) {
         //Mixed date formats are sneaking in ie 24-Jul-12 15:07:09 or Mer 25 juil 2012 9:46
 
-        if( dateTime.contains("-")){
+        if( dateTime.contains("\t")){
             dateTime =  dateTime.toLowerCase();
                 return DateUtil.convertStringDateToTimestampWithPattern(dateTime, DATE_PATTERN );
+            //return DateUtil.convertStringDateToTimestampWithPatternNoLocale(dateTime, DATE_PATTERN);
                          
         }
 
         String[] dateSegs = dateTime.split(" ");
         String month = getCorrectedMonth( dateSegs[2] );
 
-        String date = dateSegs[1] + " " + month + " " + dateSegs[3] + " " + dateSegs[4];
+       String date = dateSegs[1] + " " + month + " " + dateSegs[3] + " " + dateSegs[4];
 
-        return DateUtil.convertStringDateToTimestampWithPattern(date, ALT_DATE_PATTERN);
+       //return DateUtil.convertStringDateToTimestampWithPattern(date, ALT_DATE_PATTERN);
+        return DateUtil.convertStringDateToTimestampWithPatternNoLocale(date, ALT_DATE_PATTERN);
     }
 
 

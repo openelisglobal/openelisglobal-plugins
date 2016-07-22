@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openElisGlobalPlugin>
+<version>1.0</version>
+<analyzerImporter>
+<extension_point path="us.mn.state.health.lims.plugin.AnalyzerImporterPlugin" >
+    <extension path="oe.plugin.analyzer.CobasIntegra400" />   
+    <description value="description of Analyzer" />
+</extension_point>
+</analyzerImporter>
+<menu>
+    <extension_point path="us.mn.state.health.lims.plugin.MenuPlugin" >
+    <extension path="oe.plugin.analyzer.CobasIntegra400Menu" />   
+    <description value="Menu for CobasIntegra400" />
+</extension_point>
+</menu>
+<permission>
+    <extension_point path="us.mn.state.health.lims.plugin.PermissionPlugin" >
+        <extension path="oe.plugin.analyzer.CobasIntegra400Permission" />
+        <description value="CobasIntegra400 Analyzer permission" />
+    </extension_point>
+</permission>
+</openElisGlobalPlugin>
