@@ -19,20 +19,18 @@
 package oe.plugin.analyzer;
 
 
-import org.apache.commons.validator.GenericValidator;
-import org.hibernate.Transaction;
-import us.mn.state.health.lims.analyzerimport.util.AnalyzerTestNameCache;
-import us.mn.state.health.lims.analyzerimport.util.MappedTestName;
-import us.mn.state.health.lims.analyzerresults.valueholder.AnalyzerResults;
-import us.mn.state.health.lims.common.exception.LIMSRuntimeException;
-import us.mn.state.health.lims.common.util.DateUtil;
-import us.mn.state.health.lims.common.util.HibernateProxy;
-
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import us.mn.state.health.lims.analyzerimport.analyzerreaders.AnalyzerLineInserter;
-import us.mn.state.health.lims.analyzerimport.analyzerreaders.AnalyzerReaderUtil;
+
+import org.apache.commons.validator.GenericValidator;
+import org.openelisglobal.analyzerimport.analyzerreaders.AnalyzerLineInserter;
+import org.openelisglobal.analyzerimport.analyzerreaders.AnalyzerReaderUtil;
+import org.openelisglobal.analyzerimport.util.AnalyzerTestNameCache;
+import org.openelisglobal.analyzerimport.util.MappedTestName;
+import org.openelisglobal.analyzerresults.valueholder.AnalyzerResults;
+import org.openelisglobal.common.exception.LIMSRuntimeException;
+import org.openelisglobal.common.util.DateUtil;
 
 @SuppressWarnings("unused")
 public class SysmeXTImplementation extends AnalyzerLineInserter {
@@ -243,7 +241,7 @@ public class SysmeXTImplementation extends AnalyzerLineInserter {
 		testNameIndex[BASO_COUNT_10_uL] = "BASO_COUNT_10_uL";
 		testNameIndex[LYMPH_COUNT_10_uL] = "LYMPH_COUNT_10_uL";
 		testNameIndex[EO_COUNT_10_uL] = "EO_COUNT_10_uL";
-	 
+
 
 		unitsIndex[GB_10_uL] = "10^3/ul";
 		unitsIndex[GR_100000_uL] = "10^6/ul";
@@ -264,17 +262,17 @@ public class SysmeXTImplementation extends AnalyzerLineInserter {
 		unitsIndex[BASO_COUNT_10_uL] = "10^3/ul";
 		unitsIndex[LYMPH_COUNT_10_uL] = "10^3/ul";
 		unitsIndex[EO_COUNT_10_uL] = "10^3/ul";
-    
+
 		for( int i = 0; i < readOnlyIndex.length; i++){
 			readOnlyIndex[i] = Boolean.FALSE;
 		}
-              /*
+		/*
 		readOnlyIndex[NEUT_COUNT_10_uL] = Boolean.TRUE;
 		readOnlyIndex[MONO_COUNT_10_uL] = Boolean.TRUE;
 		readOnlyIndex[BASO_COUNT_10_uL] = Boolean.TRUE;
 		readOnlyIndex[LYMPH_COUNT_10_uL] = Boolean.TRUE;
 		readOnlyIndex[EO_COUNT_10_uL] = Boolean.TRUE;
-            */
+		 */
 		scaleIndex[GB_10_uL] = 100;
 		scaleIndex[GR_100000_uL] = 100;
 		scaleIndex[NEUT_PER_10_NEG_1_PER] = 10;
@@ -293,9 +291,9 @@ public class SysmeXTImplementation extends AnalyzerLineInserter {
 		scaleIndex[BASO_COUNT_10_uL] = 100;
 		scaleIndex[LYMPH_COUNT_10_uL] = 100;
 		scaleIndex[EO_COUNT_10_uL] = 100;
-    
-              
-                orderedTestIndexs[0] =GB_10_uL;
+
+
+		orderedTestIndexs[0] =GB_10_uL;
 		orderedTestIndexs[1] = GR_100000_uL;
 		orderedTestIndexs[13] = NEUT_PER_10_NEG_1_PER;
 		orderedTestIndexs[2] = HBG_g_L;
@@ -314,16 +312,17 @@ public class SysmeXTImplementation extends AnalyzerLineInserter {
 		orderedTestIndexs[12] = BASO_COUNT_10_uL;
 		orderedTestIndexs[9] = LYMPH_COUNT_10_uL;
 		orderedTestIndexs[11] = EO_COUNT_10_uL;
-                
-                
-                
-                }
 
+
+
+	}
+
+	@Override
 	public boolean insert(List<String> lines, String currentUserId) {
 
 		boolean successful = true;
 
-		List<AnalyzerResults> results = new ArrayList<AnalyzerResults>();
+		List<AnalyzerResults> results = new ArrayList<>();
 
 		for (int i = 1; i < lines.size(); i++) {
 			addAnalyzerResultFromLine(results, lines.get(i));
@@ -331,19 +330,15 @@ public class SysmeXTImplementation extends AnalyzerLineInserter {
 
 		if (results.size() > 0) {
 
-			Transaction tx = HibernateProxy.beginTransaction();
-
+			//			Transaction tx = HibernateProxy.beginTransaction();
 			try {
-
 				persistResults(results, currentUserId);
-
-				tx.commit();
-
+				//				tx.commit();
 			} catch (LIMSRuntimeException lre) {
-				tx.rollback();
+				//				tx.rollback();
 				successful = false;
 			} finally {
-				HibernateProxy.closeSession();
+				//				HibernateProxy.closeSession();
 			}
 		}
 
@@ -356,9 +351,9 @@ public class SysmeXTImplementation extends AnalyzerLineInserter {
 		AnalyzerReaderUtil readerUtil = new AnalyzerReaderUtil();
 		String analyzerAccessionNumber = fields[ID_PATIENT];
 		//Timestamp timestamp = DateUtil.convertStringDateToTimestampWithPattern(fields[DATE] + " " + fields[TIME], DATE_PATTERN);
-                 Timestamp timestamp = DateUtil.convertStringDateToTimestampWithPattern(fields[DATE] + " " + fields[TIME], DATE_PATTERN);   
-                
-		List<AnalyzerResults> readOnlyResults = new ArrayList<AnalyzerResults>();
+		Timestamp timestamp = DateUtil.convertStringDateToTimestampWithPattern(fields[DATE] + " " + fields[TIME], DATE_PATTERN);
+
+		List<AnalyzerResults> readOnlyResults = new ArrayList<>();
 
 		//the reason for the indirection is to get the order of tests correct
 		for (int i = 0; i < orderedTestIndexs.length; i++) {

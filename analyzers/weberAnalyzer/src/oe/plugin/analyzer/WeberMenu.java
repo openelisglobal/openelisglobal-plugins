@@ -16,12 +16,12 @@
 
 package oe.plugin.analyzer;
 
-import us.mn.state.health.lims.common.services.PluginMenuService;
-import us.mn.state.health.lims.common.services.PluginMenuService.KnownMenu;
-import us.mn.state.health.lims.common.util.ConfigurationProperties;
-import us.mn.state.health.lims.menu.util.MenuUtil;
-import us.mn.state.health.lims.menu.valueholder.Menu;
-import us.mn.state.health.lims.plugin.MenuPlugin;
+import org.openelisglobal.common.services.PluginMenuService;
+import org.openelisglobal.common.services.PluginMenuService.KnownMenu;
+import org.openelisglobal.common.util.ConfigurationProperties;
+import org.openelisglobal.menu.util.MenuUtil;
+import org.openelisglobal.menu.valueholder.Menu;
+import org.openelisglobal.plugin.MenuPlugin;
 
 public class WeberMenu extends MenuPlugin {
 
