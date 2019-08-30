@@ -17,14 +17,14 @@
 package oe.plugin.analyzer;
 
 
-import us.mn.state.health.lims.analyzerimport.analyzerreaders.AnalyzerLineInserter;
-import us.mn.state.health.lims.common.services.PluginAnalyzerService;
-import us.mn.state.health.lims.plugin.AnalyzerImporterPlugin;
+import org.openelisglobal.analyzerimport.analyzerreaders.AnalyzerLineInserter;
+import org.openelisglobal.common.services.PluginAnalyzerService;
+import org.openelisglobal.plugin.AnalyzerImporterPlugin;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static us.mn.state.health.lims.common.services.PluginAnalyzerService.getInstance;
+import static org.openelisglobal.common.services.PluginAnalyzerService.getInstance;
 
 
 public class SysmeXT implements AnalyzerImporterPlugin {

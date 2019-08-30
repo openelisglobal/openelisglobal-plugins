@@ -16,12 +16,12 @@
 
 package oe.plugin.analyzer;
 
-import us.mn.state.health.lims.analyzerimport.analyzerreaders.AnalyzerLineInserter;
-import us.mn.state.health.lims.analyzerimport.analyzerreaders.AnalyzerReaderUtil;
-import us.mn.state.health.lims.analyzerimport.util.AnalyzerTestNameCache;
-import us.mn.state.health.lims.analyzerimport.util.MappedTestName;
-import us.mn.state.health.lims.analyzerresults.valueholder.AnalyzerResults;
-import us.mn.state.health.lims.common.util.DateUtil;
+import org.openelisglobal.analyzerimport.analyzerreaders.AnalyzerLineInserter;
+import org.openelisglobal.analyzerimport.analyzerreaders.AnalyzerReaderUtil;
+import org.openelisglobal.analyzerimport.util.AnalyzerTestNameCache;
+import org.openelisglobal.analyzerimport.util.MappedTestName;
+import org.openelisglobal.analyzerresults.valueholder.AnalyzerResults;
+import org.openelisglobal.common.util.DateUtil;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
