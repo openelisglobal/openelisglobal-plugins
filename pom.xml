@@ -21,7 +21,6 @@
 		<module>./analyzers/weberAnalyzer</module>
 	</modules>
 
-
 	<dependencies>
 		<dependency>
 			<groupId>org.openelisglobal</groupId>
