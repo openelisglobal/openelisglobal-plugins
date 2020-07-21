@@ -23,7 +23,6 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.validator.GenericValidator;
 import org.openelisglobal.analyzerimport.analyzerreaders.AnalyzerLineInserter;
 import org.openelisglobal.analyzerimport.analyzerreaders.AnalyzerReaderUtil;
 import org.openelisglobal.analyzerimport.util.AnalyzerTestNameCache;
@@ -31,6 +30,8 @@ import org.openelisglobal.analyzerimport.util.MappedTestName;
 import org.openelisglobal.analyzerresults.valueholder.AnalyzerResults;
 import org.openelisglobal.common.exception.LIMSRuntimeException;
 import org.openelisglobal.common.util.DateUtil;
+import org.openelisglobal.common.util.validator.GenericValidator;
+
 
 @SuppressWarnings("unused")
 public class SysmeXTImplementation extends AnalyzerLineInserter {
@@ -360,10 +361,12 @@ public class SysmeXTImplementation extends AnalyzerLineInserter {
 			int testIndex = orderedTestIndexs[i];
 
 			if (!GenericValidator.isBlankOrNull(testNameIndex[testIndex])) {
-				MappedTestName mappedName = AnalyzerTestNameCache.instance().getMappedTest("SysmeXT", testNameIndex[testIndex]);
+				MappedTestName mappedName = AnalyzerTestNameCache.getInstance().getMappedTest("SysmeXT",
+						testNameIndex[testIndex]);
 
 				if( mappedName == null){
-					mappedName = AnalyzerTestNameCache.instance().getEmptyMappedTestName("SysmeXT", testNameIndex[testIndex]);
+					mappedName = AnalyzerTestNameCache.getInstance().getEmptyMappedTestName("SysmeXT",
+							testNameIndex[testIndex]);
 				}
 
 				AnalyzerResults analyzerResults = new AnalyzerResults();

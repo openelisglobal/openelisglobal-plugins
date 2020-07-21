@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.openelisglobal.plugins</groupId>
-	<artifactId>SysmeXT</artifactId>
+	<artifactId>Mauritius</artifactId>
 	<parent>
 		<groupId>org.openelisglobal</groupId>
 		<artifactId>openelisglobal-plugins</artifactId>
@@ -14,18 +14,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-	
 
-	<dependencies>
-		<dependency>
-			<groupId>commons-validator</groupId>
-			<artifactId>commons-validator</artifactId>
-			<version>1.6</version>
-		</dependency>
-
-	</dependencies>
-
-	
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<resources>
