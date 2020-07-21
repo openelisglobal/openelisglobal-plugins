@@ -16,7 +16,7 @@
 
 package oe.plugin.analyzer;
 
-import org.openelisglobal.common.services.PluginPermissionService;
+import org.openelisglobal.common.services.IPluginPermissionService;
 import org.openelisglobal.plugin.PermissionPlugin;
 import org.openelisglobal.role.valueholder.Role;
 import org.openelisglobal.spring.util.SpringContext;
@@ -27,7 +27,7 @@ import org.openelisglobal.systemmodule.valueholder.SystemModule;
 public class MauritiusPermission extends PermissionPlugin{
     @Override
     protected boolean insertPermission(){
-		PluginPermissionService service = SpringContext.getBean(PluginPermissionService.class);
+		IPluginPermissionService service = SpringContext.getBean(IPluginPermissionService.class);
 		SystemModule module = service.getOrCreateSystemModule("AnalyzerResults", "MauritiusAnalyzer",
 				"Results->Analyzer->MauritiusAnalyzer");
         Role role = service.getSystemRole( "Results entry" );

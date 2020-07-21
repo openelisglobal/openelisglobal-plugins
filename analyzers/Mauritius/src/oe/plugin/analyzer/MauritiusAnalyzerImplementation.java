@@ -16,6 +16,8 @@
 
 package oe.plugin.analyzer;
 
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -45,7 +47,7 @@ public class MauritiusAnalyzerImplementation extends AnalyzerLineInserter {
 	private String ANALYZER_ID;
 	
 	public MauritiusAnalyzerImplementation() {
-		testNameMap.put("SARS-CoV-2 RNA",
+		testNameMap.put(TEST_NAME,
 				SpringContext.getBean(TestService.class).getTestByLocalizedName(TEST_NAME, Locale.ENGLISH));
 		Analyzer analyzer = SpringContext.getBean(AnalyzerService.class).getAnalyzerByName("MauritiusAnalyzer");
 		ANALYZER_ID = analyzer.getId();
@@ -53,7 +55,7 @@ public class MauritiusAnalyzerImplementation extends AnalyzerLineInserter {
 
 	public void addResultLine(String resultLine, List<AnalyzerResults> results) {
 		String[] resultData = resultLine.split(CSV_DELIMETER, -1);
-		String currentAccessionNumber = resultData[getIndexOfColumn("Sample")].replace("\"", "").trim();
+		String currentAccessionNumber = resultData[getIndexOfColumn("Sample")].replace("\"", "").trim() + "-" + resultData[getIndexOfColumn("Target")].replace("\"", "").trim();
 //		String date = resultData[4].replace("\"", "");
 
 		AnalyzerResults analyzerResult = new AnalyzerResults();
@@ -64,10 +66,10 @@ public class MauritiusAnalyzerImplementation extends AnalyzerLineInserter {
 		analyzerResult.setAnalyzerId(ANALYZER_ID);
 		analyzerResult.setAccessionNumber(currentAccessionNumber);
 		analyzerResult.setIsControl(isControl(currentAccessionNumber));
+		analyzerResult.setCompleteDate(Timestamp.from(Instant.now()));
 
 //		analyzerResult.setUnits(resultData[getIndexOfColumn("Cq")].replace("\"", ""));
 //	 	aResult.setReadOnly(CheckReadOnly (testKey));
-//		analyzerResult.setCompleteDate(getTimestampFromDate(date));
 
 		LogEvent.logDebug(this.getClass().getName(), "addResultLine", "***" + analyzerResult.getAccessionNumber() + " "
 				+ analyzerResult.getCompleteDate() + " " + analyzerResult.getResult());

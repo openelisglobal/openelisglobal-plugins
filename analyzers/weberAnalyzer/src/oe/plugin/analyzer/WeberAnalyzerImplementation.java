@@ -16,16 +16,16 @@
 
 package oe.plugin.analyzer;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.openelisglobal.analyzerimport.analyzerreaders.AnalyzerLineInserter;
 import org.openelisglobal.analyzerimport.analyzerreaders.AnalyzerReaderUtil;
 import org.openelisglobal.analyzerimport.util.AnalyzerTestNameCache;
 import org.openelisglobal.analyzerimport.util.MappedTestName;
 import org.openelisglobal.analyzerresults.valueholder.AnalyzerResults;
 import org.openelisglobal.common.util.DateUtil;
-
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class WeberAnalyzerImplementation extends AnalyzerLineInserter {
@@ -117,7 +117,7 @@ public class WeberAnalyzerImplementation extends AnalyzerLineInserter {
 
     @Override
     public boolean insert(List<String> lines, String currentUserId) {
-        List<AnalyzerResults> results = new ArrayList<AnalyzerResults>();
+        List<AnalyzerResults> results = new ArrayList<>();
 
         for (int i = 1; i < lines.size(); i++) {
             addAnalyzerResultFromLine(results, lines.get(i));
@@ -136,10 +136,12 @@ public class WeberAnalyzerImplementation extends AnalyzerLineInserter {
 
         for (int i = 0; i < testNameIndex.length; i++) {
             if (testNameIndex[i] != null && testNameIndex[i].length() > 0 ) {
-                MappedTestName mappedName = AnalyzerTestNameCache.instance().getMappedTest("WeberAnalyzer", testNameIndex[i]);
+				MappedTestName mappedName = AnalyzerTestNameCache.getInstance().getMappedTest("WeberAnalyzer",
+						testNameIndex[i]);
 
                 if( mappedName == null){
-                    mappedName = AnalyzerTestNameCache.instance().getEmptyMappedTestName("WeberAnalyzer", testNameIndex[i]);
+					mappedName = AnalyzerTestNameCache.getInstance().getEmptyMappedTestName("WeberAnalyzer",
+							testNameIndex[i]);
                 }
 
                 AnalyzerResults analyzerResults = new AnalyzerResults();

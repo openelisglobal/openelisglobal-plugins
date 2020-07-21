@@ -30,7 +30,7 @@ public class MauritiusAnalyzer implements AnalyzerImporterPlugin {
 	@Override
 	public boolean connect() {
 		List<PluginAnalyzerService.TestMapping> nameMappinng = new ArrayList<>();
-		nameMappinng.add(new PluginAnalyzerService.TestMapping("Covid-19", "Covid-19"));
+		nameMappinng.add(new PluginAnalyzerService.TestMapping("SARS-CoV-2 RNA", "SARS-CoV-2 RNA"));
 		getInstance().addAnalyzerDatabaseParts("MauritiusAnalyzer", "Plugin for Mauritius analyzer", nameMappinng);
 		getInstance().registerAnalyzer(this);
 		return true;
@@ -54,7 +54,8 @@ public class MauritiusAnalyzer implements AnalyzerImporterPlugin {
 
 	public int getColumnsLine(List<String> lines) {
 		for (int k = 0; k < lines.size(); k++) {
-			if (lines.get(k).contains("Well Position")) {
+			// looking for header columns that are used for this
+			if (lines.get(k).contains("Well") && lines.get(k).contains("Sample") && lines.get(k).contains("Call")) {
 				return k;
 			}
 
