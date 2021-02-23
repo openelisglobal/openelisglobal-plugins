@@ -19,7 +19,7 @@
 		<module>./analyzers/SysmeXT</module>
 		<module>./analyzers/SysmexXT4000i</module>
 		<module>./analyzers/weberAnalyzer</module>
-		<module>./analyzers/Mauritius</module>
+		<module>./analyzers/QuaintStudio3</module>
 	</modules>
 
 	<dependencies>
