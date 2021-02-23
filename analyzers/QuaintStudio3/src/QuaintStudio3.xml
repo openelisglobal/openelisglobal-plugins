@@ -3,20 +3,20 @@
 <version>1.0</version>
 <analyzerImporter>
 <extension_point path="org.openelisglobal.plugin.AnalyzerImporterPlugin" >
-    <extension path="oe.plugin.analyzer.MauritiusAnalyzer" />   
-    <description value="Mauritius" />
+    <extension path="oe.plugin.analyzer.QuaintStudio3Analyzer" />   
+    <description value="QuaintStudio3" />
 </extension_point>
 </analyzerImporter>
 <menu>
     <extension_point path="org.openelisglobal.plugin.MenuPlugin" >
-    <extension path="oe.plugin.analyzer.MauritiusMenu" />   
-    <description value="Menu for Mauritius" />
+    <extension path="oe.plugin.analyzer.QuaintStudio3Menu" />   
+    <description value="Menu for QuaintStudio3" />
 </extension_point>
 </menu>
 <permission>
     <extension_point path="org.openelisglobal.plugin.PermissionPlugin" >
-        <extension path="oe.plugin.analyzer.MauritiusPermission" />
-        <description value="Mauritius Analyzer permission" />
+        <extension path="oe.plugin.analyzer.QuaintStudio3Permission" />
+        <description value="QuaintStudio3 Analyzer permission" />
     </extension_point>
 </permission>
 </openElisGlobalPlugin>

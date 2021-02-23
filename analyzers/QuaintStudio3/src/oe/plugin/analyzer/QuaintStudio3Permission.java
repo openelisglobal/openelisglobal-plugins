@@ -24,12 +24,12 @@ import org.openelisglobal.systemmodule.valueholder.SystemModule;
 
 /**
  */
-public class MauritiusPermission extends PermissionPlugin{
+public class QuaintStudio3Permission extends PermissionPlugin{
     @Override
     protected boolean insertPermission(){
 		IPluginPermissionService service = SpringContext.getBean(IPluginPermissionService.class);
-		SystemModule module = service.getOrCreateSystemModule("AnalyzerResults", "MauritiusAnalyzer",
-				"Results->Analyzer->MauritiusAnalyzer");
+		SystemModule module = service.getOrCreateSystemModule("AnalyzerResults", "QuaintStudio3Analyzer",
+				"Results->Analyzer->QuaintStudio3Analyzer");
         Role role = service.getSystemRole( "Results entry" );
         return service.bindRoleToModule( role, module );
     }

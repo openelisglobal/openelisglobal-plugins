@@ -23,7 +23,7 @@ import org.openelisglobal.common.services.PluginMenuService.KnownMenu;
 import org.openelisglobal.menu.valueholder.Menu;
 import org.openelisglobal.plugin.MenuPlugin;
 
-public class MauritiusMenu extends MenuPlugin {
+public class QuaintStudio3Menu extends MenuPlugin {
 
     @Override
     protected void insertMenu() {
@@ -34,23 +34,45 @@ public class MauritiusMenu extends MenuPlugin {
         // The order this analyzer will show on the menu relative to other analyzers
 		menu.setPresentationOrder(10);
         // The id needs to be unique in the system
-		menu.setElementId("mauritius_analyzer_plugin");
+		menu.setElementId("quantstudio3_analyzer_plugin");
         // This will always be "/AnalyzerResults.do?type=<The name of the analyzer in
         // the database as specified in then Analyzer class call to
         // addAnalyzerDatabaseParts(....)
-		menu.setActionURL("/AnalyzerResults.do?type=MauritiusAnalyzer");
+		menu.setActionURL("/AnalyzerResults.do?type=QuaintStudio3Analyzer");
         // The key used for the name of the analyzer on the menu. Should not already
         // exist in MessageResource.properties.
-		menu.setDisplayKey("banner.menu.results.mauritiusanalyzer");
+		menu.setDisplayKey("banner.menu.results.quantstudio3analyzer");
         menu.setOpenInNewWindow(false);
 
         service.addMenu(menu);
         // Analyzer name in English
-		service.insertLanguageKeyValue("banner.menu.results.mauritiusanalyzer", "Mauritius",
+		service.insertLanguageKeyValue("banner.menu.results.quantstudio3analyzer", "Quaint Studio 3",
                 Locale.ENGLISH.toLanguageTag());
         // Analyzer name in French
-		service.insertLanguageKeyValue("banner.menu.results.mauritiusanalyzer", "Mauritius",
+		service.insertLanguageKeyValue("banner.menu.results.quantstudio3analyzer", "Quaint Studio 3",
                 Locale.FRENCH.toLanguageTag());
+
+		menu = new Menu();
+
+		menu.setParent(PluginMenuService.getInstance().getKnownMenu(KnownMenu.WORKPLAN, "0"));
+		// The order this analyzer will show on the menu relative to other analyzers
+		menu.setPresentationOrder(10);
+		// The id needs to be unique in the system
+		menu.setElementId("ananlyzer_setup");
+		menu.setActionURL("/AnalyzerSetup.do");
+		// The key used for the name of the analyzer on the menu. Should not already
+		// exist in MessageResource.properties.
+		menu.setDisplayKey("banner.menu.analyzer.setup");
+		menu.setOpenInNewWindow(false);
+		if (!service.hasMenu(menu)) {
+			service.addMenu(menu);
+			// Analyzer name in English
+			service.insertLanguageKeyValue("banner.menu.analyzer.setup", "Analyzer Run Setup",
+					Locale.ENGLISH.toLanguageTag());
+			// Analyzer name in French
+			service.insertLanguageKeyValue("banner.menu.analyzer.setup", "Analyzer Run Setup",
+					Locale.FRENCH.toLanguageTag());
+		}
     }
 
 }

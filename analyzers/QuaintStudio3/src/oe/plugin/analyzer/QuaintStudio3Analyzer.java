@@ -25,40 +25,42 @@ import org.openelisglobal.analyzerimport.analyzerreaders.AnalyzerLineInserter;
 import org.openelisglobal.common.services.PluginAnalyzerService;
 import org.openelisglobal.plugin.AnalyzerImporterPlugin;
 
-public class MauritiusAnalyzer implements AnalyzerImporterPlugin {
+public class QuaintStudio3Analyzer implements AnalyzerImporterPlugin {
 
 	@Override
 	public boolean connect() {
-		List<PluginAnalyzerService.TestMapping> nameMappinng = new ArrayList<>();
-		nameMappinng.add(new PluginAnalyzerService.TestMapping("SARS-CoV-2 RNA", "SARS-CoV-2 RNA"));
-		getInstance().addAnalyzerDatabaseParts("MauritiusAnalyzer", "Plugin for Mauritius analyzer", nameMappinng);
+		List<PluginAnalyzerService.TestMapping> nameMapping = new ArrayList<>();
+		nameMapping.add(new PluginAnalyzerService.TestMapping("SARS-CoV-2 (COVID-19) RNA",
+				"SARS-CoV-2 (COVID-19) RNA [Presence] in Respiratory specimen by qRT-PCR",
+				QuaintStudio3AnalyzerImplementation.TEST_LOINC));
+		getInstance().addAnalyzerDatabaseParts("QuaintStudio3Analyzer", "QuaintStudio 3 Covid PCR - 96 Wells",
+				nameMapping, true);
 		getInstance().registerAnalyzer(this);
 		return true;
 	}
 
 	@Override
 	public boolean isTargetAnalyzer(List<String> lines) {
-
-		if (getColumnsLine(lines) < 0) {
-			return false;
+		for (String line : lines) {
+			if (line.startsWith("Instrument Type") && line.matches("^.*QuantStudio.?\\s+3\\s+System.*")) {
+				return true;
+			}
 		}
-
-		return true;
-
+		return false;
 	}
 
 	@Override
 	public AnalyzerLineInserter getAnalyzerLineInserter() {
-		return new MauritiusAnalyzerImplementation();
+		return new QuaintStudio3AnalyzerImplementation();
 	}
 
 	public int getColumnsLine(List<String> lines) {
 		for (int k = 0; k < lines.size(); k++) {
 			// looking for header columns that are used for this
-			if (lines.get(k).contains("Well") && lines.get(k).contains("Sample") && lines.get(k).contains("Call")) {
+			if (lines.get(k).contains("Sample Name") && lines.get(k).contains("CT") && lines.get(k).contains("Ct Mean")
+					&& lines.get(k).contains("Ct SD")) {
 				return k;
 			}
-
 		}
 
 		return -1;
