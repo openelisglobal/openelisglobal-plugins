@@ -46,10 +46,10 @@ public class QuaintStudio3Menu extends MenuPlugin {
 
         service.addMenu(menu);
         // Analyzer name in English
-		service.insertLanguageKeyValue("banner.menu.results.quantstudio3analyzer", "Quaint Studio 3",
+		service.insertLanguageKeyValue("banner.menu.results.quantstudio3analyzer", "QuaintStudio 3",
                 Locale.ENGLISH.toLanguageTag());
         // Analyzer name in French
-		service.insertLanguageKeyValue("banner.menu.results.quantstudio3analyzer", "Quaint Studio 3",
+		service.insertLanguageKeyValue("banner.menu.results.quantstudio3analyzer", "QuaintStudio 3",
                 Locale.FRENCH.toLanguageTag());
 
 		menu = new Menu();
