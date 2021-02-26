@@ -40,7 +40,7 @@ import org.openelisglobal.spring.util.SpringContext;
 import org.openelisglobal.test.service.TestService;
 import org.openelisglobal.test.valueholder.Test;
 
-public class QuaintStudio3AnalyzerImplementation extends AnalyzerLineInserter {
+public class QuantStudio3AnalyzerImplementation extends AnalyzerLineInserter {
 
 //	private static String DATE_PATTERN = "yyyyMMdd";
 
@@ -62,13 +62,13 @@ public class QuaintStudio3AnalyzerImplementation extends AnalyzerLineInserter {
 
 	private String ANALYZER_ID;
 
-	public QuaintStudio3AnalyzerImplementation() {
+	public QuantStudio3AnalyzerImplementation() {
 		List<Test> tests = testService.getTestsByLoincCode(TEST_LOINC);
 
 		if (tests != null) {
 			testLoincMap.put(TEST_LOINC, tests);
 		}
-		Analyzer analyzer = analyzerService.getAnalyzerByName("QuaintStudio3Analyzer");
+		Analyzer analyzer = analyzerService.getAnalyzerByName("QuantStudio3Analyzer");
 		ANALYZER_ID = analyzer.getId();
 	}
 
@@ -206,6 +206,6 @@ public class QuaintStudio3AnalyzerImplementation extends AnalyzerLineInserter {
 
 	@Override
 	public String getError() {
-		return "QuaintStudio3 analyzer unable to write to database";
+		return "QuantStudio3 analyzer unable to write to database";
 	}
 }

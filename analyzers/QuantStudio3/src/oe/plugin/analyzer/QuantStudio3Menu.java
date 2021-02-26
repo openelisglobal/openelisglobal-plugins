@@ -23,7 +23,7 @@ import org.openelisglobal.common.services.PluginMenuService.KnownMenu;
 import org.openelisglobal.menu.valueholder.Menu;
 import org.openelisglobal.plugin.MenuPlugin;
 
-public class QuaintStudio3Menu extends MenuPlugin {
+public class QuantStudio3Menu extends MenuPlugin {
 
     @Override
     protected void insertMenu() {
@@ -38,7 +38,7 @@ public class QuaintStudio3Menu extends MenuPlugin {
         // This will always be "/AnalyzerResults.do?type=<The name of the analyzer in
         // the database as specified in then Analyzer class call to
         // addAnalyzerDatabaseParts(....)
-		menu.setActionURL("/AnalyzerResults.do?type=QuaintStudio3Analyzer");
+		menu.setActionURL("/AnalyzerResults.do?type=QuantStudio3Analyzer");
         // The key used for the name of the analyzer on the menu. Should not already
         // exist in MessageResource.properties.
 		menu.setDisplayKey("banner.menu.results.quantstudio3analyzer");
@@ -46,10 +46,10 @@ public class QuaintStudio3Menu extends MenuPlugin {
 
         service.addMenu(menu);
         // Analyzer name in English
-		service.insertLanguageKeyValue("banner.menu.results.quantstudio3analyzer", "QuaintStudio 3",
+		service.insertLanguageKeyValue("banner.menu.results.quantstudio3analyzer", "QuantStudio 3",
                 Locale.ENGLISH.toLanguageTag());
         // Analyzer name in French
-		service.insertLanguageKeyValue("banner.menu.results.quantstudio3analyzer", "QuaintStudio 3",
+		service.insertLanguageKeyValue("banner.menu.results.quantstudio3analyzer", "QuantStudio 3",
                 Locale.FRENCH.toLanguageTag());
 
 		menu = new Menu();

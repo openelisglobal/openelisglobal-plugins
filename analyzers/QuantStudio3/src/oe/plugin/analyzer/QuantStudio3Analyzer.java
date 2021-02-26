@@ -25,15 +25,15 @@ import org.openelisglobal.analyzerimport.analyzerreaders.AnalyzerLineInserter;
 import org.openelisglobal.common.services.PluginAnalyzerService;
 import org.openelisglobal.plugin.AnalyzerImporterPlugin;
 
-public class QuaintStudio3Analyzer implements AnalyzerImporterPlugin {
+public class QuantStudio3Analyzer implements AnalyzerImporterPlugin {
 
 	@Override
 	public boolean connect() {
 		List<PluginAnalyzerService.TestMapping> nameMapping = new ArrayList<>();
 		nameMapping.add(new PluginAnalyzerService.TestMapping("SARS-CoV-2 (COVID-19) RNA",
 				"SARS-CoV-2 (COVID-19) RNA [Presence] in Respiratory specimen by qRT-PCR",
-				QuaintStudio3AnalyzerImplementation.TEST_LOINC));
-		getInstance().addAnalyzerDatabaseParts("QuaintStudio3Analyzer", "QuaintStudio 3 Covid PCR - 96 Wells",
+				QuantStudio3AnalyzerImplementation.TEST_LOINC));
+		getInstance().addAnalyzerDatabaseParts("QuantStudio3Analyzer", "QuantStudio 3 Covid PCR - 96 Wells",
 				nameMapping, true);
 		getInstance().registerAnalyzer(this);
 		return true;
@@ -51,7 +51,7 @@ public class QuaintStudio3Analyzer implements AnalyzerImporterPlugin {
 
 	@Override
 	public AnalyzerLineInserter getAnalyzerLineInserter() {
-		return new QuaintStudio3AnalyzerImplementation();
+		return new QuantStudio3AnalyzerImplementation();
 	}
 
 	public int getColumnsLine(List<String> lines) {
