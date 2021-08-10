@@ -191,11 +191,19 @@ public class QuantStudio3AnalyzerImplementation extends AnalyzerLineInserter {
 					}
 				}
 			}
+			// if test is still null assume that we are using the first test with the
+			// appropriate loinc
+			if (test == null) {
+				if (testLoincMap.containsKey(TEST_LOINC)) {
+					test = testLoincMap.get(TEST_LOINC).get(0);
+				}
+			}
 			unknownTestResult.setTestId(test.getId());
 			unknownTestResult.setTestName(test.getName());
 			if (test.getDefaultTestResult() != null) {
 				unknownTestResult.setResult(test.getDefaultTestResult().getValue());
 			}
+
 		}
 		return persistImport(currentUserId, results);
 	}
