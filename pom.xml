@@ -20,13 +20,35 @@
 		<module>./analyzers/SysmexXT4000i</module>
 		<module>./analyzers/weberAnalyzer</module>
 		<module>./analyzers/QuantStudio3</module>
+		<module>./analyzers/GeneXpert</module>
 	</modules>
+	
+	<properties>
+		<springframework.version>5.2.3.RELEASE</springframework.version>
+	</properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.openelisglobal</groupId>
 			<artifactId>openelisglobal</artifactId>
-			<version>2.3.2.1</version>
+			<version>2.4.2.2</version>
+			<scope>system</scope>
+			<systemPath></systemPath>
+		</dependency>
+		<dependency>
+			<groupId>commons-validator</groupId>
+			<artifactId>commons-validator</artifactId>
+			<version>1.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${springframework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${springframework.version}</version>
 		</dependency>
 	</dependencies>
 

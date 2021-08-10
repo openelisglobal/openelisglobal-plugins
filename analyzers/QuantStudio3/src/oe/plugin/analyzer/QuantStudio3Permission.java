@@ -21,6 +21,7 @@ import org.openelisglobal.plugin.PermissionPlugin;
 import org.openelisglobal.role.valueholder.Role;
 import org.openelisglobal.spring.util.SpringContext;
 import org.openelisglobal.systemmodule.valueholder.SystemModule;
+import org.openelisglobal.systemmodule.valueholder.SystemModuleUrl;
 
 /**
  */
@@ -31,6 +32,7 @@ public class QuantStudio3Permission extends PermissionPlugin{
 		SystemModule module = service.getOrCreateSystemModule("AnalyzerResults", "QuantStudio3Analyzer",
 				"Results->Analyzer->QuantStudio3Analyzer");
         Role role = service.getSystemRole( "Results entry" );
-        return service.bindRoleToModule( role, module );
+        SystemModuleUrl moduleUrl = service.getOrCreateSystemModuleUrl(module, "/importAnalyzer");
+        return service.bindRoleToModule( role, module, moduleUrl );
     }
 }

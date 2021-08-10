@@ -178,7 +178,7 @@ public class QuantStudio3AnalyzerImplementation extends AnalyzerLineInserter {
 				}
 			}
 		}
-		// this is done as we dcouldn't set the proper test for the control tests as
+		// this is done as we couldn't set the proper test for the control tests as
 		// they don't have real sample numbers to get the test from so we are getting it
 		// from real ones here
 		Test test = null;
