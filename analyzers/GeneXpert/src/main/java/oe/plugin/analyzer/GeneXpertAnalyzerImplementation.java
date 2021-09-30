@@ -18,13 +18,17 @@ package oe.plugin.analyzer;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
+import org.openelisglobal.analyzer.valueholder.Analyzer;
 import org.openelisglobal.analyzerimport.analyzerreaders.AnalyzerLineInserter;
 import org.openelisglobal.analyzerimport.analyzerreaders.AnalyzerReaderUtil;
 import org.openelisglobal.analyzerimport.util.AnalyzerTestNameCache;
 import org.openelisglobal.analyzerimport.util.MappedTestName;
 import org.openelisglobal.analyzerresults.valueholder.AnalyzerResults;
+import org.openelisglobal.common.services.PluginAnalyzerService;
+import org.openelisglobal.test.valueholder.Test;
 
 public class GeneXpertAnalyzerImplementation extends AnalyzerLineInserter {
 
@@ -33,10 +37,27 @@ public class GeneXpertAnalyzerImplementation extends AnalyzerLineInserter {
 	static final String HIV_QUAL = "Xpert HIV-1 Qual";
 	static final String HIV_VIRAL = "Xpert HIV-1 viral Load";
 	static final String COV_2 = "Xpert Xpress SARS-CoV-2 assay";
+	
+	static final String HBV_LOINC = "29615-2";
+	static final String HCV_LOINC = "11011-4";
+	static final String HIV_QUAL_LOINC = "";
+	static final String HIV_VIRAL_LOINC = "10351-5";
+	static final String COV_2_LOINC = "94500-6";
+
+	private String ANALYZER_ID;
+	private HashMap<String, List<Test>> testLoincMap = new HashMap<>();
 
 	private AnalyzerReaderUtil readerUtil = new AnalyzerReaderUtil();
 
 	public GeneXpertAnalyzerImplementation() {
+		testLoincMap.put(HBV_LOINC, testService.getTestsByLoincCode(HBV_LOINC));
+		testLoincMap.put(HCV_LOINC, testService.getTestsByLoincCode(HCV_LOINC));
+		testLoincMap.put(HIV_QUAL_LOINC, testService.getTestsByLoincCode(HIV_QUAL_LOINC));
+		testLoincMap.put(HIV_VIRAL_LOINC, testService.getTestsByLoincCode(HIV_VIRAL_LOINC));
+		testLoincMap.put(COV_2_LOINC, testService.getTestsByLoincCode(COV_2_LOINC));
+
+		Analyzer analyzer = analyzerService.getAnalyzerByName("GeneXpert");
+		ANALYZER_ID = analyzer.getId();
 	}
 
 	/*
@@ -81,18 +102,20 @@ public class GeneXpertAnalyzerImplementation extends AnalyzerLineInserter {
 	private AnalyzerResults createAnalyzerResult(String resultType, String resultValue, String resultUnits, Date date,
 			String accessionNumber, boolean isControl, String analyzerTestId) {
 		AnalyzerResults analyzerResults = new AnalyzerResults();
-		MappedTestName mappedName = AnalyzerTestNameCache.getInstance().getMappedTest("GeneXpert", analyzerTestId);
 
-		analyzerResults.setAnalyzerId(mappedName.getAnalyzerId());
+		analyzerResults.setAnalyzerId(ANALYZER_ID);
 		analyzerResults.setResult(resultValue);
 		analyzerResults.setUnits(resultUnits);
 		if (date != null) {
 			analyzerResults.setCompleteDate(new Timestamp(date.getTime()));
 		}
 		analyzerResults.setAccessionNumber(accessionNumber);
-		analyzerResults.setTestId(mappedName.getTestId());
+		analyzerResults.setTestId(
+				testLoincMap.get(analyzerTestId).size() > 0 ? testLoincMap.get(analyzerTestId).get(0).getId() : "");
 		analyzerResults.setIsControl(isControl);
-		analyzerResults.setTestName(mappedName.getOpenElisTestName());
+		analyzerResults.setTestName(testLoincMap.get(analyzerTestId).size() > 0
+				? testLoincMap.get(analyzerTestId).get(0).getLocalizedTestName().getLocalizedValue()
+				: "");
 		return analyzerResults;
 	}
 

@@ -31,14 +31,20 @@ public class GeneXpertAnalyzer implements AnalyzerImporterPlugin {
 	public boolean connect() {
 		List<PluginAnalyzerService.TestMapping> nameMapping = new ArrayList<>();
 		nameMapping.add(
-				new PluginAnalyzerService.TestMapping(GeneXpertAnalyzerImplementation.HBV, "29615-2", "29615-2"));
+				new PluginAnalyzerService.TestMapping(GeneXpertAnalyzerImplementation.HBV, "HEPATITIS B VIRAL LOAD",
+						GeneXpertAnalyzerImplementation.HBV_LOINC));
 		nameMapping.add(
-				new PluginAnalyzerService.TestMapping(GeneXpertAnalyzerImplementation.HBV, "11011-4", "11011-4"));
+				new PluginAnalyzerService.TestMapping(GeneXpertAnalyzerImplementation.HCV, "HEPATITIS C VIRAL LOAD",
+						GeneXpertAnalyzerImplementation.HCV_LOINC));
+		nameMapping.add(
+				new PluginAnalyzerService.TestMapping(GeneXpertAnalyzerImplementation.HIV_QUAL, "​Xpert HIV-1 Qual",
+				GeneXpertAnalyzerImplementation.HIV_QUAL_LOINC));
 		nameMapping
-				.add(new PluginAnalyzerService.TestMapping(GeneXpertAnalyzerImplementation.HIV_VIRAL, "10351-5",
-						"10351-5"));
+				.add(new PluginAnalyzerService.TestMapping(GeneXpertAnalyzerImplementation.HIV_VIRAL, "HIV VIRAL LOAD",
+						GeneXpertAnalyzerImplementation.HIV_VIRAL_LOINC));
 		nameMapping.add(
-				new PluginAnalyzerService.TestMapping(GeneXpertAnalyzerImplementation.COV_2, "94500-6", "94500-6"));
+				new PluginAnalyzerService.TestMapping(GeneXpertAnalyzerImplementation.COV_2, "COVID-19 PCR",
+						GeneXpertAnalyzerImplementation.COV_2_LOINC));
 		getInstance().addAnalyzerDatabaseParts("GeneXpert", "GeneXpert", nameMapping, true);
 		getInstance().registerAnalyzer(this);
 		return true;
