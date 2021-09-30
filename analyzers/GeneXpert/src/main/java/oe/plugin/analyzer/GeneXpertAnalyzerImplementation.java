@@ -21,6 +21,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import org.openelisglobal.analyzer.service.AnalyzerService;
 import org.openelisglobal.analyzer.valueholder.Analyzer;
 import org.openelisglobal.analyzerimport.analyzerreaders.AnalyzerLineInserter;
 import org.openelisglobal.analyzerimport.analyzerreaders.AnalyzerReaderUtil;
@@ -28,10 +29,16 @@ import org.openelisglobal.analyzerimport.util.AnalyzerTestNameCache;
 import org.openelisglobal.analyzerimport.util.MappedTestName;
 import org.openelisglobal.analyzerresults.valueholder.AnalyzerResults;
 import org.openelisglobal.common.services.PluginAnalyzerService;
+import org.openelisglobal.spring.util.SpringContext;
+import org.openelisglobal.test.service.TestService;
 import org.openelisglobal.test.valueholder.Test;
 
 public class GeneXpertAnalyzerImplementation extends AnalyzerLineInserter {
 
+	private TestService testService = SpringContext.getBean(TestService.class);
+	private AnalyzerService analyzerService = SpringContext.getBean(AnalyzerService.class);
+
+	
 	static final String HBV = "Xpert HBV Viral Load";
 	static final String HCV = "Xpert HCV Viral Load";
 	static final String HIV_QUAL = "Xpert HIV-1 Qual";
