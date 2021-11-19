@@ -46,7 +46,7 @@ public class QuantStudio3AnalyzerImplementation extends AnalyzerLineInserter {
 
 	private static final String[] CONTROL_ACCESSION_PREFIX = { "CNEG", "CPOS" };
 	public static final String[] HEADERS_USED = { "Sample Name", "CT", "Ct Mean", "Ct SD" };
-	private static final String CSV_DELIMETER = ",";
+	private static final String CSV_DELIMETER = "\t";
 	public static final String TEST_LOINC = "94500-6";
 
 	private List<String> columnHeaders;
