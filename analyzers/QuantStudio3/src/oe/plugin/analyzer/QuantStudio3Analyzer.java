@@ -42,7 +42,7 @@ public class QuantStudio3Analyzer implements AnalyzerImporterPlugin {
 	@Override
 	public boolean isTargetAnalyzer(List<String> lines) {
 		for (String line : lines) {
-			if (line.startsWith("Instrument Type") && line.matches("^.*QuantStudio.?\\s+3\\s+System.*")) {
+			if (line.contains("Instrument Type") && line.matches("^.*QuantStudio.?\\s+3\\s+System.*")) {
 				return true;
 			}
 		}
