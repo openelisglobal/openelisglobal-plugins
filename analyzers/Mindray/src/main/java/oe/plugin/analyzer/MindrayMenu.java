@@ -35,10 +35,10 @@ public class MindrayMenu extends MenuPlugin {
 		menu.setPresentationOrder(10);
         // The id needs to be unique in the system
 		menu.setElementId("mindray_analyzer_plugin");
-        // This will always be "/AnalyzerResults.do?type=<The name of the analyzer in
+        // This will always be "/AnalyzerResults?type=<The name of the analyzer in
         // the database as specified in then Analyzer class call to
         // addAnalyzerDatabaseParts(....)
-		menu.setActionURL("/AnalyzerResults.do?type=MindrayAnalyzer");
+		menu.setActionURL("/AnalyzerResults?type=MindrayAnalyzer");
         // The key used for the name of the analyzer on the menu. Should not already
         // exist in MessageResource.properties.
 		menu.setDisplayKey("banner.menu.results.mindrayanalyzer");

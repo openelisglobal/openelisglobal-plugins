@@ -33,7 +33,7 @@ public class WeberMenu extends MenuPlugin {
         menu.setParent(PluginMenuService.getInstance().getKnownMenu(KnownMenu.ANALYZER, "menu_results"));
         menu.setPresentationOrder(5);
         menu.setElementId("weber_analyzer_plugin");
-        menu.setActionURL("/AnalyzerResults.do?type=WeberAnalyzer");
+        menu.setActionURL("/AnalyzerResults?type=WeberAnalyzer");
         menu.setDisplayKey("banner.menu.results.weber");
         menu.setOpenInNewWindow(false);
 
