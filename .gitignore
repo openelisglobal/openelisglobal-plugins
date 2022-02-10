@@ -4,3 +4,4 @@ plugins/*
 *.settings
 *.classpath
 analyzers/**/.gitignore
+*/*/target

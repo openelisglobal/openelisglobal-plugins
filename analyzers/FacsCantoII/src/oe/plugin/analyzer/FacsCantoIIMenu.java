@@ -36,10 +36,10 @@ public class FacsCantoIIMenu extends MenuPlugin {
         menu.setPresentationOrder(6);
         // The id needs to be unique in the system
         menu.setElementId("FacsCantoII_analyzer_plugin");
-        // This will always be "/AnalyzerResults.do?type=<The name of the analyzer in
+        // This will always be "/AnalyzerResults?type=<The name of the analyzer in
         // the database as specified in then Analyzer class call to
         // addAnalyzerDatabaseParts(....)
-        menu.setActionURL("/AnalyzerResults.do?type=FacsCantoII");
+        menu.setActionURL("/AnalyzerResults?type=FacsCantoII");
         // The key used for the name of the analyzer on the menu. Should not already
         // exist in MessageResource.properties.
         menu.setDisplayKey("banner.menu.results.FacsCantoII");
