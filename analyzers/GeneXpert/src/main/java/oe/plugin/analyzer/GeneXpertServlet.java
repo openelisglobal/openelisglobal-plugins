@@ -60,12 +60,13 @@ public class GeneXpertServlet extends HohServlet implements ServletPlugin {
 	private static final String[] LOINC_CODES = { "29615-2", "11011-4", "10351-5", "94500-6" };
 	SampleService sampleService = SpringContext.getBean(SampleService.class);
 	AnalysisService analysisService = SpringContext.getBean(AnalysisService.class);
-	private GeneXpertAnalyzerImplementation inserter = new GeneXpertAnalyzerImplementation();
+	private GeneXpertAnalyzerImplementation inserter ;
 
 	@Override
 	public void init(ServletConfig theConfig) throws ServletException {
 		ReceivingApplication<Message> application = new GeneXpertApplication();
 		setApplication(application);
+		inserter = new GeneXpertAnalyzerImplementation();
 	}
 
 	/**

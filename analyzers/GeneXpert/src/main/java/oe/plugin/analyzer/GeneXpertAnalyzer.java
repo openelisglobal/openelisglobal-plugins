@@ -45,7 +45,7 @@ public class GeneXpertAnalyzer implements AnalyzerImporterPlugin {
 		nameMapping.add(
 				new PluginAnalyzerService.TestMapping(GeneXpertAnalyzerImplementation.COV_2, "COVID-19 PCR",
 						GeneXpertAnalyzerImplementation.COV_2_LOINC));
-		getInstance().addAnalyzerDatabaseParts("GeneXpert", "GeneXpert", nameMapping, true);
+		getInstance().addAnalyzerDatabaseParts("GeneXpertAnalyzer", "GeneXpertAnalyzer", nameMapping, true);
 		getInstance().registerAnalyzer(this);
 		return true;
 	}

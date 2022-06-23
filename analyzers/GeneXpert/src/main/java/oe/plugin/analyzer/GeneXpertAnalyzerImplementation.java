@@ -25,10 +25,7 @@ import org.openelisglobal.analyzer.service.AnalyzerService;
 import org.openelisglobal.analyzer.valueholder.Analyzer;
 import org.openelisglobal.analyzerimport.analyzerreaders.AnalyzerLineInserter;
 import org.openelisglobal.analyzerimport.analyzerreaders.AnalyzerReaderUtil;
-import org.openelisglobal.analyzerimport.util.AnalyzerTestNameCache;
-import org.openelisglobal.analyzerimport.util.MappedTestName;
 import org.openelisglobal.analyzerresults.valueholder.AnalyzerResults;
-import org.openelisglobal.common.services.PluginAnalyzerService;
 import org.openelisglobal.spring.util.SpringContext;
 import org.openelisglobal.test.service.TestService;
 import org.openelisglobal.test.valueholder.Test;
@@ -38,13 +35,13 @@ public class GeneXpertAnalyzerImplementation extends AnalyzerLineInserter {
 	private TestService testService = SpringContext.getBean(TestService.class);
 	private AnalyzerService analyzerService = SpringContext.getBean(AnalyzerService.class);
 
-	
+
 	static final String HBV = "Xpert HBV Viral Load";
 	static final String HCV = "Xpert HCV Viral Load";
 	static final String HIV_QUAL = "Xpert HIV-1 Qual";
 	static final String HIV_VIRAL = "Xpert HIV-1 viral Load";
 	static final String COV_2 = "Xpert Xpress SARS-CoV-2 assay";
-	
+
 	static final String HBV_LOINC = "29615-2";
 	static final String HCV_LOINC = "11011-4";
 	static final String HIV_QUAL_LOINC = "";
@@ -63,7 +60,7 @@ public class GeneXpertAnalyzerImplementation extends AnalyzerLineInserter {
 		testLoincMap.put(HIV_VIRAL_LOINC, testService.getTestsByLoincCode(HIV_VIRAL_LOINC));
 		testLoincMap.put(COV_2_LOINC, testService.getTestsByLoincCode(COV_2_LOINC));
 
-		Analyzer analyzer = analyzerService.getAnalyzerByName("GeneXpert");
+		Analyzer analyzer = analyzerService.getAnalyzerByName("GeneXpertAnalyzer");
 		ANALYZER_ID = analyzer.getId();
 	}
 

@@ -4,7 +4,7 @@
 <analyzerImporter>
 <extension_point path="org.openelisglobal.plugin.AnalyzerImporterPlugin" >
     <extension path="oe.plugin.analyzer.GeneXpertAnalyzer" />   
-    <description value="GeneXpert" />
+    <description value="GeneXpertAnalyzer" />
 </extension_point>
 </analyzerImporter>
 <menu>
