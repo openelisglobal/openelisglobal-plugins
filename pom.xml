@@ -22,6 +22,7 @@
 		<module>./analyzers/QuantStudio3</module>
 		<module>./analyzers/GeneXpert</module>
 		<module>./analyzers/Mindray</module>
+		<module>./analyzers/GeneXpertFile</module>
 	</modules>
 	
 	<properties>
@@ -34,7 +35,7 @@
 			<artifactId>openelisglobal</artifactId>
 			<version>2.4.2.2</version>
 			<scope>system</scope>
-			<systemPath>./lib/openelisglobal-2.5.0.0.jar</systemPath>
+			<systemPath>/home/caleb/eclipse-ee-workspace/OpenELIS-Projects/openelisglobal-plugins/lib/openelisglobal-2.5.0.0.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>commons-validator</groupId>
