@@ -75,14 +75,7 @@ public class GeneXpertAnalyzerImplementation extends AnalyzerLineInserter {
 	static final String COV_2_ANALYZER_INV = "INVALID";
 	static final String COV_2_DB_INV = "INVALID";
 
-	static final String HCV_ANALYZER_POS = "SARS-CoV-2 POSITIVE";
-	static final String HCV_DB_POS = "SARS-CoV-2 RNA DETECTED";
-	static final String HCV_ANALYZER_NEG = "SARS-CoV-2 NEGATIVE";
-	static final String HCV_DB_NEG = "SARS-CoV-2 RNA NOT DETECTED";
-	static final String HCV_ANALYZER_INV = "INVALID";
-	static final String HCV_DB_INV = "INVALID";
-
-	static final String DELIMITER = ";";
+	static final String DELIMITER = "[,;]";
 
 	private String ANALYZER_ID;
 	private Map<String, List<Test>> testLoincMap = new HashMap<>();
