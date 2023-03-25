@@ -17,6 +17,10 @@
 
 package oe.plugin.analyzer;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.openelisglobal.analyzerimport.analyzerreaders.AnalyzerLineInserter;
 import org.openelisglobal.analyzerimport.analyzerreaders.AnalyzerReaderUtil;
 import org.openelisglobal.analyzerimport.util.AnalyzerTestNameCache;
@@ -24,17 +28,13 @@ import org.openelisglobal.analyzerimport.util.MappedTestName;
 import org.openelisglobal.analyzerresults.valueholder.AnalyzerResults;
 import org.openelisglobal.common.util.DateUtil;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
-
 public class FacsCaliburImplementation extends AnalyzerLineInserter {
     //private static final String CONTROL_ACCESSION_PREFIX = "CONTROLE";
     private static final String CONTROL_ACCESSION_PREFIX2 = "IC";
     private static final String CONTROL_ACCESSION_PREFIX = "LC";
     private static final String CONTROL_ACCESSION_PREFIX3 = "QC-";
-    
-    
+
+
     private static int index = 0;
     private static final int Institution = index++;
     private static final int Director = index++;
@@ -119,7 +119,7 @@ public class FacsCaliburImplementation extends AnalyzerLineInserter {
         /* must be active if the site generate result for CD3 test
         testNameIndex[Avg_CD3__per_Lymph] = "CD3_PER";
         testNameIndex[Avg_CD3__Abs_Cnt] = "CD3_ABS";
-        */        
+        */
         testNameIndex[Avg_CD3_CD4__per_Lymph] = "CD4_PER";
         testNameIndex[Avg_CD3_CD4__Abs_Cnt] = "CD4_ABS";
 
@@ -127,14 +127,14 @@ public class FacsCaliburImplementation extends AnalyzerLineInserter {
         unitsIndex[Avg_CD3__per_Lymph] = "%";
         unitsIndex[Avg_CD3__Abs_Cnt] = "/mm3";
         */
-        
+
         unitsIndex[Avg_CD3_CD4__per_Lymph] = "%";
         unitsIndex[Avg_CD3_CD4__Abs_Cnt] = "/mm3";
       }
 
     @Override
     public boolean insert(List<String> lines, String currentUserId) {
-        List<AnalyzerResults> results = new ArrayList<AnalyzerResults>();
+        List<AnalyzerResults> results = new ArrayList<>();
 
         for (int i = 1; i < lines.size(); i++) {
             addAnalyzerResultFromLine(results, lines.get(i));
@@ -153,19 +153,21 @@ public class FacsCaliburImplementation extends AnalyzerLineInserter {
 
         for (int i = 0; i < testNameIndex.length; i++) {
             if (testNameIndex[i] != null && testNameIndex[i].length() > 0 ) {
-                MappedTestName mappedName = AnalyzerTestNameCache.instance().getMappedTest("FacsCalibur", testNameIndex[i]);
+				MappedTestName mappedName = AnalyzerTestNameCache.getInstance().getMappedTest("FacsCalibur",
+						testNameIndex[i]);
 
                 if( mappedName == null){
-                    mappedName = AnalyzerTestNameCache.instance().getEmptyMappedTestName("FacsCalibur", testNameIndex[i]);
+					mappedName = AnalyzerTestNameCache.getInstance().getEmptyMappedTestName("FacsCalibur",
+							testNameIndex[i]);
                 }
-       
+
                 AnalyzerResults analyzerResults = new AnalyzerResults();
 
                 analyzerResults.setAnalyzerId(mappedName.getAnalyzerId());
 
                 //------------------------------------------------
-          if (analyzerAccessionNumber.contains("CHRA")||analyzerAccessionNumber.contains("IL")||analyzerAccessionNumber.contains("IC")||analyzerAccessionNumber.contains("QC-")) {      
-             
+          if (analyzerAccessionNumber.contains("CHRA")||analyzerAccessionNumber.contains("IL")||analyzerAccessionNumber.contains("IC")||analyzerAccessionNumber.contains("QC-")) {
+
                 //---------------------------------------
                 String result = fields[i];
 
@@ -202,7 +204,7 @@ public class FacsCaliburImplementation extends AnalyzerLineInserter {
             dateTime =  dateTime.toLowerCase();
                 return DateUtil.convertStringDateToTimestampWithPattern(dateTime, DATE_PATTERN );
             //return DateUtil.convertStringDateToTimestampWithPatternNoLocale(dateTime, DATE_PATTERN);
-                         
+
         }
 
         String[] dateSegs = dateTime.split(" ");

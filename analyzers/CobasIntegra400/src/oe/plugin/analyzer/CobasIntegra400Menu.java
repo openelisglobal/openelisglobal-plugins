@@ -17,35 +17,41 @@
 
 package oe.plugin.analyzer;
 
+import java.util.Locale;
+
 import org.openelisglobal.common.services.PluginMenuService;
 import org.openelisglobal.common.services.PluginMenuService.KnownMenu;
-import org.openelisglobal.common.util.ConfigurationProperties;
 import org.openelisglobal.menu.valueholder.Menu;
 import org.openelisglobal.plugin.MenuPlugin;
 
 public class CobasIntegra400Menu extends MenuPlugin {
 
-	@Override
-	protected void insertMenu() {
+    @Override
+    protected void insertMenu() {
         PluginMenuService service = PluginMenuService.getInstance();
         Menu menu = new Menu();
-		
-		menu.setParent(PluginMenuService.getInstance().getKnownMenu(KnownMenu.ANALYZER, "menu_results"));
-		//The order this analyzer will show on the menu relative to other analyzers
-		menu.setPresentationOrder(6);
-		//The id needs to be unique in the system
-		menu.setElementId("CobasIntegra400_analyzer_plugin");
-		//This will always be "/AnalyzerResults.do?type=<The name of the analyzer in the database as specified in then Analyzer class call to addAnalyzerDatabaseParts(....) 
-		menu.setActionURL("/AnalyzerResults.do?type=CobasIntegra400");
-		//The key used for the name of the analyzer on the menu.  Should not already exist in MessageResource.properties.
-		menu.setDisplayKey("banner.menu.results.CobasIntegra400");
-		menu.setOpenInNewWindow(false);
+
+        menu.setParent(PluginMenuService.getInstance().getKnownMenu(KnownMenu.ANALYZER, "menu_results"));
+        // The order this analyzer will show on the menu relative to other analyzers
+        menu.setPresentationOrder(6);
+        // The id needs to be unique in the system
+        menu.setElementId("CobasIntegra400_analyzer_plugin");
+        // This will always be "/AnalyzerResults?type=<The name of the analyzer in
+        // the database as specified in then Analyzer class call to
+        // addAnalyzerDatabaseParts(....)
+        menu.setActionURL("/AnalyzerResults?type=CobasIntegra400");
+        // The key used for the name of the analyzer on the menu. Should not already
+        // exist in MessageResource.properties.
+        menu.setDisplayKey("banner.menu.results.CobasIntegra400");
+        menu.setOpenInNewWindow(false);
 
         service.addMenu(menu);
-		//Analyzer name in English
-        service.insertLanguageKeyValue("banner.menu.results.CobasIntegra400","Biochemistry: Cobas Integra 400+", ConfigurationProperties.LOCALE.ENGLISH.getRepresentation());
-		//Analyzer name in French
-        service.insertLanguageKeyValue("banner.menu.results.CobasIntegra400","Biochimie: Cobas Integra 400+", ConfigurationProperties.LOCALE.FRENCH.getRepresentation());
-	}
-	
+        // Analyzer name in English
+        service.insertLanguageKeyValue("banner.menu.results.CobasIntegra400", "Biochemistry: Cobas Integra 400+",
+                Locale.ENGLISH.toLanguageTag());
+        // Analyzer name in French
+        service.insertLanguageKeyValue("banner.menu.results.CobasIntegra400", "Biochimie: Cobas Integra 400+",
+                Locale.FRENCH.toLanguageTag());
+    }
+
 }

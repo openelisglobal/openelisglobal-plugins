@@ -32,169 +32,152 @@ import org.openelisglobal.test.service.TestService;
 import org.openelisglobal.test.valueholder.Test;
 
 public class CobasIntegra400Implementation extends AnalyzerLineInserter {
-	static String ANALYZER_ID;
+    static String ANALYZER_ID;
 
-	static String DATE_PATTERN = "yyyy-MM-dd";
+    static String DATE_PATTERN = "yyyy-MM-dd";
 
-	private static final String CONTROL_ACCESSION_PREFIX = "PCC";
-	private static final String[] units = new String[100];
-	private static final int[] scaleIndex = new int[100];
-	private static final String DELIMITER = "\\s";
-	double result = Double.NaN;
-	String line;
-	String[] data;
+    private static final String CONTROL_ACCESSION_PREFIX = "PCC";
+    private static final String[] units = new String[100];
+    private static final int[] scaleIndex = new int[100];
+    private static final String DELIMITER = "\\s";
+    double result = Double.NaN;
+    String line;
+    String[] data;
 
+    static HashMap<String, Test> testNameMap = new HashMap<>();
+    static HashMap<String, String> testUnitMap = new HashMap<>();
+    static HashMap<String, Integer> testPositionMap = new HashMap<>();
 
+    static {
+        TestService testService = SpringContext.getBean(TestService.class);
 
+        testNameMap.put("ALTL", testService.getTestByName("Transaminases ALTL"));
+        testNameMap.put("ASTL", testService.getTestByName("Transaminases ASTL"));
+        testNameMap.put("CREJ2", testService.getTestByName("Créatininémie"));
+        testNameMap.put("GLU3", testService.getTestByName("Glycémie"));
+        testNameMap.put("GLU2", testService.getTestByName("Glycémie"));
 
-	static HashMap<String, Test> testNameMap = new HashMap<>();
-	static HashMap<String, String> testUnitMap = new HashMap<>();
-	static HashMap<String, Integer> testPositionMap = new HashMap<>();
+        /*
+         * testNameMap.put("ALTL",
+         * testService.getTestByName("Transaminases GPT (37°C)"));
+         * testNameMap.put("ASTL", testService.getTestByName("Transaminases"));
+         * testNameMap.put("CREJ2", testService.getTestByName("Créatinine"));
+         * testNameMap.put("GLU2", testService.getTestByName("Glucose"));
+         */
 
-	static{
+        // System.out.println(testNameMap);
 
-		testNameMap.put("ALTL", SpringContext.getBean(TestService.class).getTestByName("Transaminases ALTL"));
-		testNameMap.put("ASTL", SpringContext.getBean(TestService.class).getTestByName("Transaminases ASTL"));
-		testNameMap.put("CREJ2", SpringContext.getBean(TestService.class).getTestByName("Créatininémie"));
-		testNameMap.put("GLU3", SpringContext.getBean(TestService.class).getTestByName("Glycémie"));
-		testNameMap.put("GLU2", SpringContext.getBean(TestService.class).getTestByName("Glycémie"));
+        AnalyzerService analyzerService = SpringContext.getBean(AnalyzerService.class);
+        Analyzer analyzer = analyzerService.getAnalyzerByName("CobasIntegra400");
+        ANALYZER_ID = analyzer.getId();
 
+    }
 
-		/*
-            testNameMap.put("ALTL", SpringContext.getBean(TestService.class).getTestByName("Transaminases GPT (37°C)"));
-            testNameMap.put("ASTL", SpringContext.getBean(TestService.class).getTestByName("Transaminases"));
-            testNameMap.put("CREJ2", SpringContext.getBean(TestService.class).getTestByName("Créatinine"));
-            testNameMap.put("GLU2", SpringContext.getBean(TestService.class).getTestByName("Glucose"));
-		 */
+    static {
 
-		//System.out.println(testNameMap);
+        testPositionMap.put("ALTL", 0);
+        testPositionMap.put("ASTL", 1);
+        testPositionMap.put("CREJ2", 2);
+        testPositionMap.put("GLU2", 3);
+        testPositionMap.put("GLU3", 4);
 
+        // System.out.println(testPositionMap);
 
-		AnalyzerService analyzerService = SpringContext.getBean(AnalyzerService.class);
-		Analyzer analyzer = analyzerService.getAnalyzerByName("CobasIntegra400");
-		ANALYZER_ID = analyzer.getId();
+    }
 
+    static {
 
-	}
+        testUnitMap.put("ALTL", "/1|g/L");
+        testUnitMap.put("ASTL", "/1|mg/L");
+        testUnitMap.put("CREJ2", "/1|U/L");
+        testUnitMap.put("GLU3", "/1|U/L");
+        testUnitMap.put("GLU2", "/1|U/L");
 
+        System.out.println(testUnitMap);
 
-	static{
+    }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.openelisglobal.analyzerimport.analyzerreaders.AnalyzerLineInserter#insert
+     * (java.util.List, java.lang.String)
+     */
+    @Override
+    public boolean insert(List<String> lines, String currentUserId) {
+        List<AnalyzerResults> results = new ArrayList<>();
+        Integer Position = 0;
 
-		testPositionMap.put("ALTL", 0);
-		testPositionMap.put("ASTL", 1);
-		testPositionMap.put("CREJ2", 2);
-		testPositionMap.put("GLU2", 3);
-		testPositionMap.put("GLU3", 4);
+        for (Position = 0; Position < 5; Position++) {
 
-		//System.out.println(testPositionMap);
+            for (Integer j = 1; j < lines.size(); j++) {
+                System.out.println("processing line #: " + j);
+                line = lines.get(j).replace("\\s", "").trim();
+                System.out.println(line);
+                data = line.split("\\s");
+                Integer Real_Position;
 
+                AnalyzerResults aResult = new AnalyzerResults();
+                String currentAccessionNumber = data[5].trim();
+                String Result = data[13].trim();
+                String testKey = data[3].trim();
+                String date = data[1];
 
-	}
+                aResult.setTestId(testNameMap.get(testKey).getId());
+                aResult.setTestName(testNameMap.get(testKey).getName());
+                Real_Position = testPositionMap.get(testKey);
+                aResult.setAnalyzerId(ANALYZER_ID);
+                aResult.setAccessionNumber(data[5].trim());
+                aResult.setIsControl(CheckControl(currentAccessionNumber));
+                aResult.setCompleteDate(getTimestampFromDate(date));
+                aResult.setUnits(data[8].trim());
+                aResult.setResult(Result.trim());
 
+                if ((Result.isEmpty())) {
+                    Result = data[12].trim();
+                    aResult.setResult(Result.trim());
+                }
 
+                if (currentAccessionNumber.startsWith(CONTROL_ACCESSION_PREFIX)) {
+                    Result = data[14].trim();
+                    aResult.setResult(Result.trim());
+                    aResult.setUnits(data[9].trim());
 
+                }
 
+                // System.out.println("***" + aResult.getAccessionNumber() + " " +
+                // aResult.getCompleteDate() + "***" + aResult.getResult()+ "***");
 
+                if (Real_Position.equals(Position)) {
+                    results.add(aResult);
+                }
 
-	static{
+            }
 
+        }
 
-		testUnitMap.put("ALTL", "/1|g/L");
-		testUnitMap.put("ASTL", "/1|mg/L");
-		testUnitMap.put("CREJ2", "/1|U/L");
-		testUnitMap.put("GLU3", "/1|U/L");
-		testUnitMap.put("GLU2", "/1|U/L");
+        return persistImport(currentUserId, results);
 
-		System.out.println(testUnitMap);
+    }
 
+    private boolean CheckControl(String AccessionPrefix) {
 
+        boolean IsControl = false;
 
-	}
+        if (AccessionPrefix.startsWith(CONTROL_ACCESSION_PREFIX)) {
+            IsControl = true;
+        }
+        return IsControl;
 
-	/* (non-Javadoc)
-	 * @see org.openelisglobal.analyzerimport.analyzerreaders.AnalyzerLineInserter#insert(java.util.List, java.lang.String)
-	 */
-	@Override
-	public boolean insert(List<String> lines, String currentUserId) {
-		List<AnalyzerResults> results = new ArrayList<>();
-		Integer Position = 0;
+    }
 
-		for (Position = 0; Position < 5; Position++) {
+    private Timestamp getTimestampFromDate(String dateTime) {
+        return DateUtil.convertStringDateToTimestampWithPattern(dateTime, DATE_PATTERN);
+    }
 
-
-			for (Integer j = 1; j < lines.size(); j++) {
-				System.out.println("processing line #: "  + j);
-				line = lines.get(j).replace("\\s", "").trim();
-				System.out.println(line);
-				data = line.split("\\s");
-				Integer Real_Position;
-
-				AnalyzerResults aResult = new AnalyzerResults();
-				String currentAccessionNumber = data [5].trim();
-				String Result = data [13].trim();
-				String testKey = data [3].trim();
-				String date = data [1];
-
-				aResult.setTestId(testNameMap.get(testKey).getId());
-				aResult.setTestName(testNameMap.get(testKey).getName());
-				Real_Position = testPositionMap.get(testKey);
-				aResult.setAnalyzerId(ANALYZER_ID);
-				aResult.setAccessionNumber(data [5].trim());
-				aResult.setIsControl(CheckControl(currentAccessionNumber));
-				aResult.setCompleteDate(getTimestampFromDate(date));
-				aResult.setUnits(data [8].trim());
-				aResult.setResult(Result.trim());
-
-				if ((Result.isEmpty())) {
-					Result = data [12].trim();
-					aResult.setResult(Result.trim());
-				}
-
-
-				if (currentAccessionNumber.startsWith(CONTROL_ACCESSION_PREFIX)){
-					Result = data [14].trim();
-					aResult.setResult(Result.trim());
-					aResult.setUnits(data [9].trim());
-
-
-				}
-
-				//System.out.println("***" + aResult.getAccessionNumber() + " " + aResult.getCompleteDate() + "***" + aResult.getResult()+ "***");
-
-				if (Real_Position.equals(Position)) {
-					results.add(aResult);
-				}
-
-
-
-			}
-
-		}
-
-		return persistImport(currentUserId, results);
-
-	}
-
-
-	private boolean CheckControl (String AccessionPrefix){
-
-		boolean IsControl= false;
-
-		if (AccessionPrefix.startsWith(CONTROL_ACCESSION_PREFIX)) {
-			IsControl = true;
-		}
-		return IsControl;
-
-	}
-
-
-	private Timestamp getTimestampFromDate(String dateTime) {
-		return DateUtil.convertStringDateToTimestampWithPattern(dateTime, DATE_PATTERN);
-	}
-
-	@Override
-	public String getError() {
-		return "Cobas Integra 400 unable to write to database";
-	}
+    @Override
+    public String getError() {
+        return "Cobas Integra 400 unable to write to database";
+    }
 }
