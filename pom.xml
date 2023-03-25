@@ -23,6 +23,16 @@
 		<module>./analyzers/GeneXpert</module>
 		<module>./analyzers/Mindray</module>
 		<module>./analyzers/GeneXpertFile</module>
+		<module>./analyzers/SysmexKX21</module>
+		<module>./analyzers/Cobas4800</module>
+		<module>./analyzers/CobasTaqman96VL</module>
+		<module>./analyzers/CobasTaqMan96DBS</module>
+		<module>./analyzers/CobasTaqMan48VL</module>
+		<module>./analyzers/AB7500Fast</module>
+		<module>./analyzers/Cobas6800VL</module>
+		<module>./analyzers/Sysmex4000i</module>
+		<module>./analyzers/SysmexXN1000</module>
+		
 	</modules>
 	
 	<properties>
@@ -33,9 +43,7 @@
 		<dependency>
 			<groupId>org.openelisglobal</groupId>
 			<artifactId>openelisglobal</artifactId>
-			<version>2.4.2.2</version>
-			<scope>system</scope>
-			<systemPath>/home/caleb/eclipse-ee-workspace/OpenELIS-Projects/openelisglobal-plugins/lib/openelisglobal-2.5.0.0.jar</systemPath>
+			<version>2.7.0.26</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-validator</groupId>

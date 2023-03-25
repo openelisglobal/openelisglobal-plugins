@@ -55,6 +55,10 @@ public class CobasC111AnalyzerImplementation extends AnalyzerLineInserter {
 		testNameMap.put("GLU2", SpringContext.getBean(TestService.class).getTestByName("Glucose"));
 		testNameMap.put("CREJ2", SpringContext.getBean(TestService.class).getTestByName("Créatinine"));
 		testNameMap.put("ALTL", SpringContext.getBean(TestService.class).getTestByName("Transaminases GPT (37°C)"));
+		testNameMap.put("ASTL", SpringContext.getBean(TestService.class).getTestByName("Transaminases G0T (37°C)"));
+		testNameMap.put("CHOL2", SpringContext.getBean(TestService.class).getTestByName("Cholestérol total"));
+		testNameMap.put("HDLC3", SpringContext.getBean(TestService.class).getTestByName("Cholestérol HDL"));
+		testNameMap.put("TRIGL", SpringContext.getBean(TestService.class).getTestByName("Triglycérides"));
 
 		System.out.println(testNameMap);
 
@@ -71,6 +75,10 @@ public class CobasC111AnalyzerImplementation extends AnalyzerLineInserter {
 		testUnitMap.put("GLU2", "/1|10^3/uL");
 		testUnitMap.put("CREJ2", "/1|10^6/uL");
 		testUnitMap.put("ALTL", "/1|g/dL");
+		testUnitMap.put("ASTL", "/1|g/dL");
+		testUnitMap.put("CHOL2", "/1|g/L");
+		testUnitMap.put("HDLC3", "/1|g/L");
+		testUnitMap.put("TRIGL", "/1|g/L");
 
 		System.out.println(testUnitMap);
 

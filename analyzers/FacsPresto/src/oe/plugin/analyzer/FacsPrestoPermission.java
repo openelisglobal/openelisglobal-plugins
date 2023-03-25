@@ -28,7 +28,9 @@ public class FacsPrestoPermission extends PermissionPlugin{
     protected boolean insertPermission(){
         PluginPermissionService service = new PluginPermissionService();
         SystemModule module = service.getOrCreateSystemModule( "AnalyzerResults", "FacsPrestoAnalyzer", "Results->Analyzer->FacsPrestoAnalyzer" );
-        Role role = service.getSystemRole( "Results entry" );
-        return service.bindRoleToModule( role, module );
+        //Role role = service.getSystemRole( "Results entry" );
+		SystemModuleUrl moduleUrl = service.getOrCreateSystemModuleUrl(module, "/AnalyzerResults");
+		Role role = service.getSystemRole("Results");
+		return service.bindRoleToModule(role, module, moduleUrl);
     }
 }
