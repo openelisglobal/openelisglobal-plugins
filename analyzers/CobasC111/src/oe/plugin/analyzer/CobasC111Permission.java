@@ -29,6 +29,7 @@ public class CobasC111Permission extends PermissionPlugin{
         PluginPermissionService service = new PluginPermissionService();
         SystemModule module = service.getOrCreateSystemModule( "AnalyzerResults", "CobasC111Analyzer", "Results->Analyzer->CobasC111Analyzer" );
         Role role = service.getSystemRole( "Results entry" );
-        return service.bindRoleToModule( role, module );
+        SystemModuleUrl moduleUrl = service.getOrCreateSystemModuleUrl(module, "/importAnalyzer");
+        return service.bindRoleToModule( role, module, moduleUrl );
     }
 }

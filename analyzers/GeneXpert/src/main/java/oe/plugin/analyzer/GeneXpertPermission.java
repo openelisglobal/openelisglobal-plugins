@@ -30,7 +30,9 @@ public class GeneXpertPermission extends PermissionPlugin {
 		IPluginPermissionService service = SpringContext.getBean(IPluginPermissionService.class);
 		SystemModule module = service.getOrCreateSystemModule("AnalyzerResults", "GeneXpertAnalyzer",
 				"Results->Analyzer->GeneXpertAnalyzer");
-        Role role = service.getSystemRole( "Results entry" );
-        return service.bindRoleToModule( role, module );
+        //Role role = service.getSystemRole( "Results entry" );
+		SystemModuleUrl moduleUrl = service.getOrCreateSystemModuleUrl(module, "/AnalyzerResults");
+		Role role = service.getSystemRole("Results");
+		return service.bindRoleToModule(role, module, moduleUrl);
     }
 }

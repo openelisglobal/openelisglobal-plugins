@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openElisGlobalPlugin>
+<version>1.0</version>
+<analyzerImporter>
+<extension_point path="org.openelisglobal.plugin.AnalyzerImporterPlugin" >
+	<extension path="oe.plugin.analyzer.SysmexKX21Analyzer" />
+	<description value="Hematologie: Sysmex KX21 analyzer importer" />
+</extension_point>
+</analyzerImporter>
+<menu>
+    <extension_point path="org.openelisglobal.plugin.MenuPlugin" >
+	<extension path="oe.plugin.analyzer.SysmexKX21Menu" />
+	<description value="Hematologie: Sysmex KX21 Analyzer menu" />
+</extension_point>
+</menu>
+<permission>
+    <extension_point path="org.openelisglobal.plugin.PermissionPlugin" >
+        <extension path="oe.plugin.analyzer.SysmexKX21Permission" />
+        <description value="Hematologie: Sysmex KX21  Analyzer permission" />
+    </extension_point>
+</permission>
+</openElisGlobalPlugin>

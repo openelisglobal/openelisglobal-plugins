@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openElisGlobalPlugin>
+<version>1.0</version>
+<analyzerImporter>
+<extension_point path="org.openelisglobal.plugin.AnalyzerImporterPlugin" >
+	<extension path="oe.plugin.analyzer.TaqMan96VLAnalyzer" />
+	<description value="Virologie: CobasTaqman96VL analyzer importer" />
+</extension_point>
+</analyzerImporter>
+<menu>
+    <extension_point path="org.openelisglobal.plugin.MenuPlugin" >
+	<extension path="oe.plugin.analyzer.TaqMan96VLMenu" />
+	<description value="Virologie: CobasTaqman96VL Analyzer menu" />
+</extension_point>
+</menu>
+<permission>
+    <extension_point path="org.openelisglobal.plugin.PermissionPlugin" >
+        <extension path="oe.plugin.analyzer.TaqMan96VLPermission" />
+        <description value="Virologie: CobasTaqman96VL Analyzer permission" />
+    </extension_point>
+</permission>
+</openElisGlobalPlugin>
