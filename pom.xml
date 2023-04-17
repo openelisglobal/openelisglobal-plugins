@@ -26,7 +26,7 @@
 	</modules>
 	
 	<properties>
-		<springframework.version>5.3.14</springframework.version>
+		<springframework.version>5.3.27</springframework.version>
 	</properties>
 
 	<dependencies>
