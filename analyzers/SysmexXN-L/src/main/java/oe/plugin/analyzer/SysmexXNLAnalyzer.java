@@ -5,7 +5,7 @@
  * http://www.mozilla.org/MPL/
  *
  * Software distributed under the License is distributed on an "AS IS"
- * basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+ * basis, WITHOUT WARRANTY OF ANY KIND, either eXNLress or implied. See the
  * License for the specific language governing rights and limitations under
  * the License.
  *
@@ -25,26 +25,115 @@ import org.openelisglobal.analyzerimport.analyzerreaders.AnalyzerLineInserter;
 import org.openelisglobal.common.services.PluginAnalyzerService;
 import org.openelisglobal.plugin.AnalyzerImporterPlugin;
 
-public class SysmexXNLAnalyzer implements AnalyzerImporterPlugin {
+import org.openelisglobal.common.log.LogEvent;
 
+public class SysmexXNLAnalyzer implements AnalyzerImporterPlugin {
+	
 	@Override
-	public boolean connect() {
+	public boolean connect() { 
 		List<PluginAnalyzerService.TestMapping> nameMapping = new ArrayList<>();
 		nameMapping.add(
-				new PluginAnalyzerService.TestMapping(SysmexXNLAnalyzerAnalyzerImplementation.HBV, "HEPATITIS B VIRAL LOAD",
-						SysmexXNLAnalyzerAnalyzerImplementation.HBV_LOINC));
+				new PluginAnalyzerService.TestMapping(SysmexXNLAnalyzerImplementation.ANALYZER_TEST_WBC, "White Blood Cells Count",
+						SysmexXNLAnalyzerImplementation.LOINC_WBC));
 		nameMapping.add(
-				new PluginAnalyzerService.TestMapping(SysmexXNLAnalyzerAnalyzerImplementation.HCV, "HEPATITIS C VIRAL LOAD",
-						SysmexXNLAnalyzerAnalyzerImplementation.HCV_LOINC));
+				new PluginAnalyzerService.TestMapping(SysmexXNLAnalyzerImplementation.ANALYZER_TEST_RBC, "Red Blood Cells Count",
+						SysmexXNLAnalyzerImplementation.LOINC_RBC));
 		nameMapping.add(
-				new PluginAnalyzerService.TestMapping(SysmexXNLAnalyzerAnalyzerImplementation.HIV_QUAL, "​Xpert HIV-1 Qual",
-				SysmexXNLAnalyzerAnalyzerImplementation.HIV_QUAL_LOINC));
+				new PluginAnalyzerService.TestMapping(SysmexXNLAnalyzerImplementation.ANALYZER_TEST_HGB, "​Hemoglobin​",
+				SysmexXNLAnalyzerImplementation.LOINC_HGB));
+		nameMapping.add(
+				new PluginAnalyzerService.TestMapping(SysmexXNLAnalyzerImplementation.ANALYZER_TEST_HCT, "Hematocrit",
+						SysmexXNLAnalyzerImplementation.LOINC_HCT));
+		nameMapping.add(
+				new PluginAnalyzerService.TestMapping(SysmexXNLAnalyzerImplementation.ANALYZER_TEST_MCV, "Medium corpuscular volum",
+						SysmexXNLAnalyzerImplementation.LOINC_MCV));
+		nameMapping.add(
+				new PluginAnalyzerService.TestMapping(SysmexXNLAnalyzerImplementation.ANALYZER_TEST_MCH, "",
+						SysmexXNLAnalyzerImplementation.LOINC_MCH));
 		nameMapping
-				.add(new PluginAnalyzerService.TestMapping(SysmexXNLAnalyzerAnalyzerImplementation.HIV_VIRAL, "HIV VIRAL LOAD",
-						SysmexXNLAnalyzerAnalyzerImplementation.HIV_VIRAL_LOINC));
+				.add(new PluginAnalyzerService.TestMapping(SysmexXNLAnalyzerImplementation.ANALYZER_TEST_MCHC, "",
+						SysmexXNLAnalyzerImplementation.LOINC_MCHC));
+		nameMapping
+				.add(new PluginAnalyzerService.TestMapping(SysmexXNLAnalyzerImplementation.ANALYZER_TEST_RDWSD, "",
+						SysmexXNLAnalyzerImplementation.LOINC_RDWSD));
 		nameMapping.add(
-				new PluginAnalyzerService.TestMapping(SysmexXNLAnalyzerAnalyzerImplementation.COV_2, "COVID-19 PCR",
-						SysmexXNLAnalyzerAnalyzerImplementation.COV_2_LOINC));
+				new PluginAnalyzerService.TestMapping(SysmexXNLAnalyzerImplementation.ANALYZER_TEST_RDWCV, "",
+						SysmexXNLAnalyzerImplementation.LOINC_RDWCV));
+		nameMapping
+				.add(new PluginAnalyzerService.TestMapping(SysmexXNLAnalyzerImplementation.ANALYZER_TEST_PLT, "Platelets",
+						SysmexXNLAnalyzerImplementation.LOINC_PLT));
+		nameMapping.add(
+				new PluginAnalyzerService.TestMapping(SysmexXNLAnalyzerImplementation.ANALYZER_TEST_MPV, "",
+						SysmexXNLAnalyzerImplementation.LOINC_MPV));
+		nameMapping.add(
+				new PluginAnalyzerService.TestMapping(SysmexXNLAnalyzerImplementation.ANALYZER_TEST_NEUT_COUNT, "​Neutrophiles​",
+				SysmexXNLAnalyzerImplementation.LOINC_NEUT_COUNT));
+		nameMapping.add(
+				new PluginAnalyzerService.TestMapping(SysmexXNLAnalyzerImplementation.ANALYZER_TEST_NEUT_PERCENT, "Neutrophiles (%)",
+						SysmexXNLAnalyzerImplementation.LOINC_NEUT_PERCENT));
+		nameMapping.add(
+				new PluginAnalyzerService.TestMapping(SysmexXNLAnalyzerImplementation.ANALYZER_TEST_LYMPH_COUNT, "Lymphocytes (Abs)",
+						SysmexXNLAnalyzerImplementation.LOINC_LYMPH_COUNT));
+		nameMapping.add(
+				new PluginAnalyzerService.TestMapping(SysmexXNLAnalyzerImplementation.ANALYZER_TEST_LYMPH_PERCENT, "Lymphocytes (%)",
+						SysmexXNLAnalyzerImplementation.LOINC_LYMPH_PERCENT));
+		nameMapping.add(
+				new PluginAnalyzerService.TestMapping(SysmexXNLAnalyzerImplementation.ANALYZER_TEST_MONO_COUNT, "Monocytes (Abs)",
+						SysmexXNLAnalyzerImplementation.LOINC_MONO_COUNT));
+		nameMapping.add(
+				new PluginAnalyzerService.TestMapping(SysmexXNLAnalyzerImplementation.ANALYZER_TEST_MONO_PERCENT, "Monocytes (%)",
+						SysmexXNLAnalyzerImplementation.LOINC_MONO_PERCENT));
+		nameMapping.add(
+				new PluginAnalyzerService.TestMapping(SysmexXNLAnalyzerImplementation.ANALYZER_TEST_EO_COUNT, "Eosinophiles",
+						SysmexXNLAnalyzerImplementation.LOINC_EO_COUNT));
+		nameMapping.add(
+				new PluginAnalyzerService.TestMapping(SysmexXNLAnalyzerImplementation.ANALYZER_TEST_EO_PERCENT, "Eosinophiles (%)",
+						SysmexXNLAnalyzerImplementation.LOINC_EO_PERCENT));
+		nameMapping.add(
+				new PluginAnalyzerService.TestMapping(SysmexXNLAnalyzerImplementation.ANALYZER_TEST_BASO_COUNT, "Basophiles",
+						SysmexXNLAnalyzerImplementation.LOINC_BASO_COUNT));
+		nameMapping.add(
+				new PluginAnalyzerService.TestMapping(SysmexXNLAnalyzerImplementation.ANALYZER_TEST_BASO_PERCENT, "Basophiles (%)",
+						SysmexXNLAnalyzerImplementation.LOINC_BASO_PERCENT));
+		nameMapping.add(
+				new PluginAnalyzerService.TestMapping(SysmexXNLAnalyzerImplementation.ANALYZER_TEST_IG_COUNT, "",
+						SysmexXNLAnalyzerImplementation.LOINC_IG_COUNT));
+		nameMapping.add(
+				new PluginAnalyzerService.TestMapping(SysmexXNLAnalyzerImplementation.ANALYZER_TEST_IG_PERCENT, "",
+						SysmexXNLAnalyzerImplementation.LOINC_IG_PERCENT));
+		nameMapping.add(
+				new PluginAnalyzerService.TestMapping(SysmexXNLAnalyzerImplementation.ANALYZER_TEST_RET_COUNT, "",
+						SysmexXNLAnalyzerImplementation.LOINC_RET_COUNT));
+		nameMapping.add(
+				new PluginAnalyzerService.TestMapping(SysmexXNLAnalyzerImplementation.ANALYZER_TEST_RET_PERCENT, "",
+						SysmexXNLAnalyzerImplementation.LOINC_RET_PERCENT));
+		nameMapping.add(
+				new PluginAnalyzerService.TestMapping(SysmexXNLAnalyzerImplementation.ANALYZER_TEST_IRF, "",
+						SysmexXNLAnalyzerImplementation.LOINC_IRF));
+		nameMapping.add(
+				new PluginAnalyzerService.TestMapping(SysmexXNLAnalyzerImplementation.ANALYZER_TEST_RETHE, "",
+						SysmexXNLAnalyzerImplementation.LOINC_RETHE));
+		nameMapping.add(
+				new PluginAnalyzerService.TestMapping(SysmexXNLAnalyzerImplementation.ANALYZER_TEST_WBCBF, "",
+						SysmexXNLAnalyzerImplementation.LOINC_WBCBF));
+		nameMapping.add(
+				new PluginAnalyzerService.TestMapping(SysmexXNLAnalyzerImplementation.ANALYZER_TEST_RBCBF, "",
+						SysmexXNLAnalyzerImplementation.LOINC_RBCBF));
+		nameMapping.add(
+				new PluginAnalyzerService.TestMapping(SysmexXNLAnalyzerImplementation.ANALYZER_TEST_MN_COUNT, "",
+						SysmexXNLAnalyzerImplementation.LOINC_MN_COUNT));
+		nameMapping.add(
+				new PluginAnalyzerService.TestMapping(SysmexXNLAnalyzerImplementation.ANALYZER_TEST_MN_PERCENT, "",
+						SysmexXNLAnalyzerImplementation.LOINC_MN_PERCENT));
+		nameMapping.add(
+				new PluginAnalyzerService.TestMapping(SysmexXNLAnalyzerImplementation.ANALYZER_TEST_PMN_COUNT, "",
+						SysmexXNLAnalyzerImplementation.LOINC_PMN_COUNT));
+		nameMapping.add(
+				new PluginAnalyzerService.TestMapping(SysmexXNLAnalyzerImplementation.ANALYZER_TEST_PMN_PERCENT, "",
+						SysmexXNLAnalyzerImplementation.LOINC_PMN_PERCENT));
+		nameMapping.add(
+				new PluginAnalyzerService.TestMapping(SysmexXNLAnalyzerImplementation.ANALYZER_TEST_TCBF_COUNT, "",
+						SysmexXNLAnalyzerImplementation.LOINC_TCBF_COUNT));
 		getInstance().addAnalyzerDatabaseParts("SysmexXNLAnalyzer", "SysmexXNLAnalyzer", nameMapping, true);
 		getInstance().registerAnalyzer(this);
 		return true;
@@ -56,12 +145,12 @@ public class SysmexXNLAnalyzer implements AnalyzerImporterPlugin {
 			if (line.startsWith(SysmexXNLAnalyzerImplementation.HEADER_RECORD_IDENTIFIER)) {
 				String[] headerRecord = line.split(SysmexXNLAnalyzerImplementation.DEFAULT_FIELD_DELIMITER);
 				if (headerRecord.length < 5) {
-					LogEvent.logTrace(this.getClass().getSimpleName(), "isTargetAnalyzer", "incoming message is not SysmexXN: header record not long enough")
+					LogEvent.logTrace(this.getClass().getSimpleName(), "isTargetAnalyzer", "incoming message is not SysmexXN: header record not long enough");
 					return false;
 				}
 				String[] senderName = headerRecord[4].split(SysmexXNLAnalyzerImplementation.DEFAULT_SUBFIELD_DELIMITER);
 				if (senderName.length < 1) {
-					LogEvent.logTrace(this.getClass().getSimpleName(), "isTargetAnalyzer", "incoming message is not SysmexXN: sender name field not long enough")
+					LogEvent.logTrace(this.getClass().getSimpleName(), "isTargetAnalyzer", "incoming message is not SysmexXN: sender name field not long enough");
 					return false;
 				}
 				LogEvent.logTrace(this.getClass().getSimpleName(), "isTargetAnalyzer", "incoming message analyzer name is " + senderName[0]);

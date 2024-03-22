@@ -23,7 +23,7 @@ import org.openelisglobal.common.services.PluginMenuService.KnownMenu;
 import org.openelisglobal.menu.valueholder.Menu;
 import org.openelisglobal.plugin.MenuPlugin;
 
-public class HttpHl7TemplateAnalyzerMenu extends MenuPlugin {
+public class SysmexXNLAnalyzerMenu extends MenuPlugin {
 
     @Override
     protected void insertMenu() {

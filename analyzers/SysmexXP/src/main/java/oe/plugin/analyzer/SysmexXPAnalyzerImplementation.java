@@ -17,10 +17,12 @@
 package oe.plugin.analyzer;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.commons.validator.GenericValidator;
 import org.openelisglobal.analyzer.service.AnalyzerService;
 import org.openelisglobal.analyzer.valueholder.Analyzer;
 import org.openelisglobal.analyzerimport.analyzerreaders.AnalyzerLineInserter;
@@ -31,71 +33,77 @@ import org.openelisglobal.analyzerresults.valueholder.AnalyzerResults;
 import org.openelisglobal.common.services.PluginAnalyzerService;
 import org.openelisglobal.spring.util.SpringContext;
 import org.openelisglobal.test.service.TestService;
+import org.openelisglobal.sample.service.SampleService;
+import org.openelisglobal.analysis.service.AnalysisService;
 import org.openelisglobal.test.valueholder.Test;
+import org.openelisglobal.analysis.valueholder.Analysis;
+import org.openelisglobal.sample.valueholder.Sample;
+import org.openelisglobal.common.util.DateUtil;
+import org.openelisglobal.common.log.LogEvent;
 
 public class SysmexXPAnalyzerImplementation extends AnalyzerLineInserter {
-
-	private TestService testService = SpringContext.getBean(TestService.class);
-	private AnalyzerService analyzerService = SpringContext.getBean(AnalyzerService.class);
 
 	static final String ANALYZER_TEST_WBC = "WBC";
 	static final String ANALYZER_TEST_RBC = "RBC";
 	static final String ANALYZER_TEST_HGB = "HGB";
-	static final String ANALYZER_TEST_PLCR = "P-LCR";
 	static final String ANALYZER_TEST_HCT = "HCT";
 	static final String ANALYZER_TEST_MCV = "MCV";
 	static final String ANALYZER_TEST_MCH = "MCH";
 	static final String ANALYZER_TEST_MCHC = "MCHC";
-	static final String ANALYZER_TEST_PLT = "PLT";
-	static final String ANALYZER_TEST_WSCR = "W-SCR";
-	static final String ANALYZER_TEST_WMCR = "W-MCR";
-	static final String ANALYZER_TEST_WLCR = "W-LCR";
-	static final String ANALYZER_TEST_WSCC = "W-SCC";
-	static final String ANALYZER_TEST_WMCC = "W-MCC";
-	static final String ANALYZER_TEST_WLCC = "W-LCC";
 	static final String ANALYZER_TEST_RDWSD = "RDW-SD";
 	static final String ANALYZER_TEST_RDWCV = "RDW-CV";
-	static final String ANALYZER_TEST_PDW = "PDW";
+	static final String ANALYZER_TEST_PLT = "PLT";
 	static final String ANALYZER_TEST_MPV = "MPV";
-	static final String ANALYZER_TEST_PCT = "PCT";
-	static final String ANALYZER_TEST_WSMV = "W-SMV";
-	static final String ANALYZER_TEST_WLMV = "W-LMV";
+	static final String ANALYZER_TEST_NEUT_COUNT = "NEUT#";
+	static final String ANALYZER_TEST_NEUT_PERCENT = "NEUT%";
+	static final String ANALYZER_TEST_LYMPH_COUNT = "LYMPH#";
+	static final String ANALYZER_TEST_LYMPH_PERCENT = "LYMPH%";
+	static final String ANALYZER_TEST_MONO_COUNT = "MONO#";
+	static final String ANALYZER_TEST_MONO_PERCENT = "MONO%";
+	static final String ANALYZER_TEST_EO_COUNT = "EO#";
+	static final String ANALYZER_TEST_EO_PERCENT = "EO%";
+	static final String ANALYZER_TEST_BASO_COUNT = "BASO#";
+	static final String ANALYZER_TEST_BASO_PERCENT = "BASO%";
+	static final String ANALYZER_TEST_IG_COUNT = "IG#";
+	static final String ANALYZER_TEST_IG_PERCENT = "IG%";
+	static final String ANALYZER_TEST_MXD_COUNT = "MXD#";
+	static final String ANALYZER_TEST_MXD_PERCENT = "MXD%";
 
-	static final String LOINC_WBC = "";
-	static final String LOINC_RBC = "";
-	static final String LOINC_HGB = "";
-	static final String LOINC_PLCR = "";
-	static final String LOINC_HCT = "";
-	static final String LOINC_MCV = "";
-	static final String LOINC_MCH = "";
-	static final String LOINC_MCHC = "";
-	static final String LOINC_PLT = "";
-	static final String LOINC_WSCR = "";
-	static final String LOINC_WMCR = "";
-	static final String LOINC_WLCR = "";
-	static final String LOINC_WSCC = "";
-	static final String LOINC_WMCC = "";
-	static final String LOINC_WLCC = "";
-	static final String LOINC_RDWSD = "";
-	static final String LOINC_RDWCV = "";
-	static final String LOINC_PDW = "";
-	static final String LOINC_MPV = "";
-	static final String LOINC_PCT = "";
-	static final String LOINC_WSMV = "";
-	static final String LOINC_WLMV = "";
+	static final String LOINC_WBC = "6690-2";
+	static final String LOINC_RBC = "789-8";
+	static final String LOINC_HGB = "718-7";
+	static final String LOINC_HCT = "4544-3";
+	static final String LOINC_MCV = "787-2";
+	static final String LOINC_MCH = "785-6";
+	static final String LOINC_MCHC = "786-4";
+	static final String LOINC_RDWSD = "21000-5";
+	static final String LOINC_RDWCV = "788-0";
+	static final String LOINC_PLT = "777-3";
+	static final String LOINC_MPV = "32623-1";
+	static final String LOINC_NEUT_COUNT = "751-8";
+	static final String LOINC_NEUT_PERCENT = "770-8";
+	static final String LOINC_LYMPH_COUNT = "731-0";
+	static final String LOINC_LYMPH_PERCENT = "736-9";
+	static final String LOINC_MONO_COUNT = "742-7";
+	static final String LOINC_MONO_PERCENT = "5905-5";
+	static final String LOINC_EO_COUNT = "711-2";
+	static final String LOINC_EO_PERCENT = "713-8";
+	static final String LOINC_BASO_COUNT = "704-7";
+	static final String LOINC_BASO_PERCENT = "706-2";
+	static final String LOINC_IG_COUNT = "53115-2";
+	static final String LOINC_IG_PERCENT = "71695-1";
+	static final String LOINC_MXD_COUNT = "32154-7";
+	static final String LOINC_MXD_PERCENT = "32155-4";
 
-	private final String HEADER_RECORD_IDENTIFIER = "H";
-	private final String PATIENT_RECORD_IDENTIFIER = "P";
-	private final String ORDER_RECORD_IDENTIFIER = "O";
-	private final String RESULT_RECORD_IDENTIFIER = "R";
-	private final String END_RECORD_IDENTIFIER = "L";
-	private final String DEFAULT_FIELD_DELIMITER = "\\|";
-	private final String DEFAULT_SUBFIELD_DELIMITER = "\\^";
-	private final String DEFAULT_REPEATER_DELIMITER = "\\\\";
-	private final String TEST_COMMUNICATION_IDENTIFIER = "M|1|106";
-
-	private String ANALYZER_ID;
-	private HashMap<String, List<Test>> testLoincMap = new HashMap<>();
+	protected static final String HEADER_RECORD_IDENTIFIER = "H";
+	protected static final String PATIENT_RECORD_IDENTIFIER = "P";
+	protected static final String ORDER_RECORD_IDENTIFIER = "O";
+	protected static final String RESULT_RECORD_IDENTIFIER = "R";
+	protected static final String END_RECORD_IDENTIFIER = "L";
+	protected static final String DEFAULT_FIELD_DELIMITER = "\\|";
+	protected static final String DEFAULT_SUBFIELD_DELIMITER = "\\^";
+	protected static final String DEFAULT_REPEATER_DELIMITER = "\\\\";
+	protected static final String TEST_COMMUNICATION_IDENTIFIER = "M|1|106";
 
 	private TestService testService = SpringContext.getBean(TestService.class);
 	private SampleService sampleService = SpringContext.getBean(SampleService.class);
@@ -107,29 +115,33 @@ public class SysmexXPAnalyzerImplementation extends AnalyzerLineInserter {
 
 	private AnalyzerReaderUtil readerUtil = new AnalyzerReaderUtil();
 
-	public SysmexXNLAnalyzerAnalyzerImplementation() {
+	public SysmexXPAnalyzerImplementation() {
+
 		testLoincMap.put(ANALYZER_TEST_WBC, testService.getTestsByLoincCode(LOINC_WBC));
 		testLoincMap.put(ANALYZER_TEST_RBC, testService.getTestsByLoincCode(LOINC_RBC));
 		testLoincMap.put(ANALYZER_TEST_HGB, testService.getTestsByLoincCode(LOINC_HGB));
-		testLoincMap.put(ANALYZER_TEST_PLCR, testService.getTestsByLoincCode(LOINC_PLCR));
 		testLoincMap.put(ANALYZER_TEST_HCT, testService.getTestsByLoincCode(LOINC_HCT));
 		testLoincMap.put(ANALYZER_TEST_MCV, testService.getTestsByLoincCode(LOINC_MCV));
 		testLoincMap.put(ANALYZER_TEST_MCH, testService.getTestsByLoincCode(LOINC_MCH));
 		testLoincMap.put(ANALYZER_TEST_MCHC, testService.getTestsByLoincCode(LOINC_MCHC));
-		testLoincMap.put(ANALYZER_TEST_PLT, testService.getTestsByLoincCode(LOINC_PLT));
-		testLoincMap.put(ANALYZER_TEST_WSCR, testService.getTestsByLoincCode(LOINC_WSCR));
-		testLoincMap.put(ANALYZER_TEST_WMCR, testService.getTestsByLoincCode(LOINC_WMCR));
-		testLoincMap.put(ANALYZER_TEST_WLCR, testService.getTestsByLoincCode(LOINC_WLCR));
-		testLoincMap.put(ANALYZER_TEST_WSCC, testService.getTestsByLoincCode(LOINC_WSCC));
-		testLoincMap.put(ANALYZER_TEST_WMCC, testService.getTestsByLoincCode(LOINC_WMCC));
-		testLoincMap.put(ANALYZER_TEST_WLCC, testService.getTestsByLoincCode(LOINC_WLCC));
 		testLoincMap.put(ANALYZER_TEST_RDWSD, testService.getTestsByLoincCode(LOINC_RDWSD));
 		testLoincMap.put(ANALYZER_TEST_RDWCV, testService.getTestsByLoincCode(LOINC_RDWCV));
-		testLoincMap.put(ANALYZER_TEST_PDW, testService.getTestsByLoincCode(LOINC_PDW));
+		testLoincMap.put(ANALYZER_TEST_PLT, testService.getTestsByLoincCode(LOINC_PLT));
 		testLoincMap.put(ANALYZER_TEST_MPV, testService.getTestsByLoincCode(LOINC_MPV));
-		testLoincMap.put(ANALYZER_TEST_PCT, testService.getTestsByLoincCode(LOINC_PCT));
-		testLoincMap.put(ANALYZER_TEST_WSMV, testService.getTestsByLoincCode(LOINC_WSMV));
-		testLoincMap.put(ANALYZER_TEST_WLMV, testService.getTestsByLoincCode(LOINC_WLMV));
+		testLoincMap.put(ANALYZER_TEST_NEUT_COUNT, testService.getTestsByLoincCode(LOINC_NEUT_COUNT));
+		testLoincMap.put(ANALYZER_TEST_NEUT_PERCENT, testService.getTestsByLoincCode(LOINC_NEUT_PERCENT));
+		testLoincMap.put(ANALYZER_TEST_LYMPH_COUNT, testService.getTestsByLoincCode(LOINC_LYMPH_COUNT));
+		testLoincMap.put(ANALYZER_TEST_LYMPH_PERCENT, testService.getTestsByLoincCode(LOINC_LYMPH_PERCENT));
+		testLoincMap.put(ANALYZER_TEST_MONO_COUNT, testService.getTestsByLoincCode(LOINC_MONO_COUNT));
+		testLoincMap.put(ANALYZER_TEST_MONO_PERCENT, testService.getTestsByLoincCode(LOINC_MONO_PERCENT));
+		testLoincMap.put(ANALYZER_TEST_EO_COUNT, testService.getTestsByLoincCode(LOINC_EO_COUNT));
+		testLoincMap.put(ANALYZER_TEST_EO_PERCENT, testService.getTestsByLoincCode(LOINC_EO_PERCENT));
+		testLoincMap.put(ANALYZER_TEST_BASO_COUNT, testService.getTestsByLoincCode(LOINC_BASO_COUNT));
+		testLoincMap.put(ANALYZER_TEST_BASO_PERCENT, testService.getTestsByLoincCode(LOINC_BASO_PERCENT));
+		testLoincMap.put(ANALYZER_TEST_IG_COUNT, testService.getTestsByLoincCode(LOINC_IG_COUNT));
+		testLoincMap.put(ANALYZER_TEST_IG_PERCENT, testService.getTestsByLoincCode(LOINC_IG_PERCENT));
+		testLoincMap.put(ANALYZER_TEST_MXD_COUNT, testService.getTestsByLoincCode(LOINC_MXD_COUNT));
+		testLoincMap.put(ANALYZER_TEST_MXD_PERCENT, testService.getTestsByLoincCode(LOINC_MXD_PERCENT));
 
 		Analyzer analyzer = analyzerService.getAnalyzerByName("SysmexXNLAnalyzer");
 		ANALYZER_ID = analyzer.getId();
@@ -210,12 +222,12 @@ public class SysmexXPAnalyzerImplementation extends AnalyzerLineInserter {
 			String[] orderIds = orderIdField.split(DEFAULT_SUBFIELD_DELIMITER);
 			String orderTestId = orderIds.length >= 5 ? orderIds[4] : "";
 			if (GenericValidator.isBlankOrNull(orderTestId)) {
-				LogEvent.logWarn(this.getClass().getSimpleName(), "addRecordsToResults", "order analysis parameter name is not present")
+				LogEvent.logWarn(this.getClass().getSimpleName(), "addRecordsToResults", "order analysis parameter name is not present");
 			}
 			orderTestIds.add(orderTestId);
 		}
 		if (orderTestIds.size() <= 0) {
-			LogEvent.logWarn(this.getClass().getSimpleName(), "addRecordsToResults", "order analysis has no tests specified")
+			LogEvent.logWarn(this.getClass().getSimpleName(), "addRecordsToResults", "order analysis has no tests specified");
 		}
 		String resultTestId = resultTestIdField.length >= 5 ? resultTestIdField[4] : "";
 
@@ -248,8 +260,8 @@ public class SysmexXPAnalyzerImplementation extends AnalyzerLineInserter {
 		AnalyzerResults analyzerResults = addResult(results, null, "N", resultRecordFields[3], 
 			DateUtil.convertStringDateToTimestampWithPattern(resultRecordFields[12], "yyyyMMddHHmmss"), 
 			currentAccessionNumber, false, resultRecordFields[4], test);
-		LogEvent.logDebug(this.getClass().getName(), "addResultLine", "***" + analyzerResult.getAccessionNumber() + " "
-				+ analyzerResult.getCompleteDate() + " " + analyzerResult.getResult());
+		LogEvent.logDebug(this.getClass().getName(), "addResultLine", "***" + analyzerResults.getAccessionNumber() + " "
+				+ analyzerResults.getCompleteDate() + " " + analyzerResults.getResult());
 	}
 
 	public AnalyzerResults addResult(List<AnalyzerResults> resultList, List<AnalyzerResults> notMatchedResults, String resultType,

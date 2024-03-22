@@ -24,6 +24,7 @@ import java.util.List;
 import org.openelisglobal.analyzerimport.analyzerreaders.AnalyzerLineInserter;
 import org.openelisglobal.common.services.PluginAnalyzerService;
 import org.openelisglobal.plugin.AnalyzerImporterPlugin;
+import org.openelisglobal.common.log.LogEvent;
 
 public class SysmexXPAnalyzer implements AnalyzerImporterPlugin {
 
@@ -31,71 +32,80 @@ public class SysmexXPAnalyzer implements AnalyzerImporterPlugin {
 	public boolean connect() {
 		List<PluginAnalyzerService.TestMapping> nameMapping = new ArrayList<>();
 		nameMapping.add(
-				new PluginAnalyzerService.TestMapping(SysmexXPAnalyzerAnalyzerImplementation.ANALYZER_TEST_WBC, "",
-						SysmexXPAnalyzerAnalyzerImplementation.LOINC_WBC));
+				new PluginAnalyzerService.TestMapping(SysmexXPAnalyzerImplementation.ANALYZER_TEST_WBC, "White Blood Cells Count",
+						SysmexXPAnalyzerImplementation.LOINC_WBC));
 		nameMapping.add(
-				new PluginAnalyzerService.TestMapping(SysmexXPAnalyzerAnalyzerImplementation.ANALYZER_TEST_RBC, "",
-						SysmexXPAnalyzerAnalyzerImplementation.LOINC_RBC));
+				new PluginAnalyzerService.TestMapping(SysmexXPAnalyzerImplementation.ANALYZER_TEST_RBC, "Red Blood Cells Count",
+						SysmexXPAnalyzerImplementation.LOINC_RBC));
 		nameMapping.add(
-				new PluginAnalyzerService.TestMapping(SysmexXPAnalyzerAnalyzerImplementation.ANALYZER_TEST_HGB, "​",
-				SysmexXPAnalyzerAnalyzerImplementation.LOINC_HGB));
+				new PluginAnalyzerService.TestMapping(SysmexXPAnalyzerImplementation.ANALYZER_TEST_HGB, "​Hemoglobin",
+				SysmexXPAnalyzerImplementation.LOINC_HGB));
+		nameMapping.add(
+				new PluginAnalyzerService.TestMapping(SysmexXPAnalyzerImplementation.ANALYZER_TEST_HCT, "Hematocrit",
+						SysmexXPAnalyzerImplementation.LOINC_HCT));
+		nameMapping.add(
+				new PluginAnalyzerService.TestMapping(SysmexXPAnalyzerImplementation.ANALYZER_TEST_MCV, "Medium corpuscular volum",
+						SysmexXPAnalyzerImplementation.LOINC_MCV));
+		nameMapping.add(
+				new PluginAnalyzerService.TestMapping(SysmexXPAnalyzerImplementation.ANALYZER_TEST_MCH, "",
+						SysmexXPAnalyzerImplementation.LOINC_MCH));
 		nameMapping
-				.add(new PluginAnalyzerService.TestMapping(SysmexXPAnalyzerAnalyzerImplementation.ANALYZER_TEST_PLCR, "",
-						SysmexXPAnalyzerAnalyzerImplementation.LOINC_PLCR));
-		nameMapping.add(
-				new PluginAnalyzerService.TestMapping(SysmexXPAnalyzerAnalyzerImplementation.ANALYZER_TEST_HCT, "",
-						SysmexXPAnalyzerAnalyzerImplementation.LOINC_HCT));
-		nameMapping.add(
-				new PluginAnalyzerService.TestMapping(SysmexXPAnalyzerAnalyzerImplementation.ANALYZER_TEST_MCV, "",
-						SysmexXPAnalyzerAnalyzerImplementation.LOINC_MCV));
-		nameMapping.add(
-				new PluginAnalyzerService.TestMapping(SysmexXPAnalyzerAnalyzerImplementation.ANALYZER_TEST_MCH, "",
-						SysmexXPAnalyzerAnalyzerImplementation.LOINC_MCH));
-		nameMapping.add(
-				new PluginAnalyzerService.TestMapping(SysmexXPAnalyzerAnalyzerImplementation.ANALYZER_TEST_MCHC, "​",
-				SysmexXPAnalyzerAnalyzerImplementation.LOINC_MCHC));
+				.add(new PluginAnalyzerService.TestMapping(SysmexXPAnalyzerImplementation.ANALYZER_TEST_MCHC, "",
+						SysmexXPAnalyzerImplementation.LOINC_MCHC));
 		nameMapping
-				.add(new PluginAnalyzerService.TestMapping(SysmexXPAnalyzerAnalyzerImplementation.ANALYZER_TEST_PLT, "",
-						SysmexXPAnalyzerAnalyzerImplementation.LOINC_PLT));
+				.add(new PluginAnalyzerService.TestMapping(SysmexXPAnalyzerImplementation.ANALYZER_TEST_RDWSD, "",
+						SysmexXPAnalyzerImplementation.LOINC_RDWSD));
 		nameMapping.add(
-				new PluginAnalyzerService.TestMapping(SysmexXPAnalyzerAnalyzerImplementation.ANALYZER_TEST_WSCR, "",
-						SysmexXPAnalyzerAnalyzerImplementation.LOINC_WSCR));
-		nameMapping.add(
-				new PluginAnalyzerService.TestMapping(SysmexXPAnalyzerAnalyzerImplementation.ANALYZER_TEST_WMCR, "",
-						SysmexXPAnalyzerAnalyzerImplementation.LOINC_WMCR));
-		nameMapping.add(
-				new PluginAnalyzerService.TestMapping(SysmexXPAnalyzerAnalyzerImplementation.ANALYZER_TEST_WLCR, "",
-						SysmexXPAnalyzerAnalyzerImplementation.LOINC_WLCR));
-		nameMapping.add(
-				new PluginAnalyzerService.TestMapping(SysmexXPAnalyzerAnalyzerImplementation.ANALYZER_TEST_WSCC, "​",
-				SysmexXPAnalyzerAnalyzerImplementation.LOINC_WSCC));
-		nameMapping.add(
-			new PluginAnalyzerService.TestMapping(SysmexXPAnalyzerAnalyzerImplementation.ANALYZER_TEST_WMCC, "",
-								SysmexXPAnalyzerAnalyzerImplementation.LOINC_WMCC));
-		nameMapping.add(
-					new PluginAnalyzerService.TestMapping(SysmexXPAnalyzerAnalyzerImplementation.ANALYZER_TEST_WLCC, "",
-								SysmexXPAnalyzerAnalyzerImplementation.LOINC_WLCC));
+				new PluginAnalyzerService.TestMapping(SysmexXPAnalyzerImplementation.ANALYZER_TEST_RDWCV, "",
+						SysmexXPAnalyzerImplementation.LOINC_RDWCV));
 		nameMapping
-				.add(new PluginAnalyzerService.TestMapping(SysmexXPAnalyzerAnalyzerImplementation.ANALYZER_TEST_RDWSD, "",
-						SysmexXPAnalyzerAnalyzerImplementation.LOINC_RDWSD));
+				.add(new PluginAnalyzerService.TestMapping(SysmexXPAnalyzerImplementation.ANALYZER_TEST_PLT, "Platelets",
+						SysmexXPAnalyzerImplementation.LOINC_PLT));
 		nameMapping.add(
-				new PluginAnalyzerService.TestMapping(SysmexXPAnalyzerAnalyzerImplementation.ANALYZER_TEST_RDWCV, "",
-						SysmexXPAnalyzerAnalyzerImplementation.LOINC_RDWCV));
-		nameMapping
-				.add(new PluginAnalyzerService.TestMapping(SysmexXPAnalyzerAnalyzerImplementation.ANALYZER_TEST_PDW, "",
-						SysmexXPAnalyzerAnalyzerImplementation.LOINC_PDW));
+				new PluginAnalyzerService.TestMapping(SysmexXPAnalyzerImplementation.ANALYZER_TEST_MPV, "",
+						SysmexXPAnalyzerImplementation.LOINC_MPV));
 		nameMapping.add(
-				new PluginAnalyzerService.TestMapping(SysmexXPAnalyzerAnalyzerImplementation.ANALYZER_TEST_MPV, "",
-						SysmexXPAnalyzerAnalyzerImplementation.LOINC_MPV));
-		nameMapping
-				.add(new PluginAnalyzerService.TestMapping(SysmexXPAnalyzerAnalyzerImplementation.ANALYZER_TEST_PCT, "",
-						SysmexXPAnalyzerAnalyzerImplementation.LOINC_PCT));
+				new PluginAnalyzerService.TestMapping(SysmexXPAnalyzerImplementation.ANALYZER_TEST_NEUT_COUNT, "Neutrophiles​",
+				SysmexXPAnalyzerImplementation.LOINC_NEUT_COUNT));
 		nameMapping.add(
-				new PluginAnalyzerService.TestMapping(SysmexXPAnalyzerAnalyzerImplementation.ANALYZER_TEST_WSMV, "",
-						SysmexXPAnalyzerAnalyzerImplementation.LOINC_WSMV));
-		nameMapping
-				.add(new PluginAnalyzerService.TestMapping(SysmexXPAnalyzerAnalyzerImplementation.ANALYZER_TEST_WLMV, "",
-						SysmexXPAnalyzerAnalyzerImplementation.LOINC_WLMV));
+				new PluginAnalyzerService.TestMapping(SysmexXPAnalyzerImplementation.ANALYZER_TEST_NEUT_PERCENT, "Neutrophiles (%)",
+						SysmexXPAnalyzerImplementation.LOINC_NEUT_PERCENT));
+		nameMapping.add(
+				new PluginAnalyzerService.TestMapping(SysmexXPAnalyzerImplementation.ANALYZER_TEST_LYMPH_COUNT, "Lymphocytes (Abs)",
+						SysmexXPAnalyzerImplementation.LOINC_LYMPH_COUNT));
+		nameMapping.add(
+				new PluginAnalyzerService.TestMapping(SysmexXPAnalyzerImplementation.ANALYZER_TEST_LYMPH_PERCENT, "Lymphocytes (%)",
+						SysmexXPAnalyzerImplementation.LOINC_LYMPH_PERCENT));
+		nameMapping.add(
+				new PluginAnalyzerService.TestMapping(SysmexXPAnalyzerImplementation.ANALYZER_TEST_MONO_COUNT, "Monocytes (Abs)",
+						SysmexXPAnalyzerImplementation.LOINC_MONO_COUNT));
+		nameMapping.add(
+				new PluginAnalyzerService.TestMapping(SysmexXPAnalyzerImplementation.ANALYZER_TEST_MONO_PERCENT, "Monocytes (%)",
+						SysmexXPAnalyzerImplementation.LOINC_MONO_PERCENT));
+		nameMapping.add(
+				new PluginAnalyzerService.TestMapping(SysmexXPAnalyzerImplementation.ANALYZER_TEST_EO_COUNT, "Eosinophiles",
+						SysmexXPAnalyzerImplementation.LOINC_EO_COUNT));
+		nameMapping.add(
+				new PluginAnalyzerService.TestMapping(SysmexXPAnalyzerImplementation.ANALYZER_TEST_EO_PERCENT, "Eosinophiles (%)",
+						SysmexXPAnalyzerImplementation.LOINC_EO_PERCENT));
+		nameMapping.add(
+				new PluginAnalyzerService.TestMapping(SysmexXPAnalyzerImplementation.ANALYZER_TEST_BASO_COUNT, "Basophiles",
+						SysmexXPAnalyzerImplementation.LOINC_BASO_COUNT));
+		nameMapping.add(
+				new PluginAnalyzerService.TestMapping(SysmexXPAnalyzerImplementation.ANALYZER_TEST_BASO_PERCENT, "Basophiles (%)",
+						SysmexXPAnalyzerImplementation.LOINC_BASO_PERCENT));
+		nameMapping.add(
+				new PluginAnalyzerService.TestMapping(SysmexXPAnalyzerImplementation.ANALYZER_TEST_IG_COUNT, "",
+						SysmexXPAnalyzerImplementation.LOINC_IG_COUNT));
+		nameMapping.add(
+				new PluginAnalyzerService.TestMapping(SysmexXPAnalyzerImplementation.ANALYZER_TEST_IG_PERCENT, "",
+						SysmexXPAnalyzerImplementation.LOINC_IG_PERCENT));
+		nameMapping.add(
+				new PluginAnalyzerService.TestMapping(SysmexXPAnalyzerImplementation.ANALYZER_TEST_MXD_COUNT, "",
+						SysmexXPAnalyzerImplementation.LOINC_MXD_COUNT));
+		nameMapping.add(
+				new PluginAnalyzerService.TestMapping(SysmexXPAnalyzerImplementation.ANALYZER_TEST_MXD_PERCENT, "",
+						SysmexXPAnalyzerImplementation.LOINC_MXD_PERCENT));
 		getInstance().addAnalyzerDatabaseParts("SysmexXPAnalyzer", "SysmexXPAnalyzer", nameMapping, true);
 		getInstance().registerAnalyzer(this);
 		return true;
@@ -107,12 +117,12 @@ public class SysmexXPAnalyzer implements AnalyzerImporterPlugin {
 			if (line.startsWith(SysmexXPAnalyzerImplementation.HEADER_RECORD_IDENTIFIER)) {
 				String[] headerRecord = line.split(SysmexXPAnalyzerImplementation.DEFAULT_FIELD_DELIMITER);
 				if (headerRecord.length < 5) {
-					LogEvent.logTrace(this.getClass().getSimpleName(), "isTargetAnalyzer", "incoming message is not SysmexXP: header record not long enough")
+					LogEvent.logTrace(this.getClass().getSimpleName(), "isTargetAnalyzer", "incoming message is not SysmexXP: header record not long enough");
 					return false;
 				}
 				String[] senderName = headerRecord[4].split(SysmexXPAnalyzerImplementation.DEFAULT_SUBFIELD_DELIMITER);
 				if (senderName.length < 1) {
-					LogEvent.logTrace(this.getClass().getSimpleName(), "isTargetAnalyzer", "incoming message is not SysmexXP: sender name field not long enough")
+					LogEvent.logTrace(this.getClass().getSimpleName(), "isTargetAnalyzer", "incoming message is not SysmexXP: sender name field not long enough");
 					return false;
 				}
 				LogEvent.logTrace(this.getClass().getSimpleName(), "isTargetAnalyzer", "incoming message analyzer name is " + senderName[0]);
