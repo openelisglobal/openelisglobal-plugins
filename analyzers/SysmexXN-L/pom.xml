@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.openelisglobal.plugins</groupId>
-	<artifactId>GeneXpertFileAnalyzer</artifactId>
+	<artifactId>SysmexXNLAnalyzer</artifactId>
 	<parent>
 		<groupId>org.openelisglobal</groupId>
 		<artifactId>openelisglobal-plugins</artifactId>
@@ -11,10 +11,30 @@
 		<relativePath>../../pom.xml</relativePath>
 	</parent>
 
-	<version>0.2</version>
+	<version>0.3</version>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<hapi.version>2.3</hapi.version>
 	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>4.0.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${springframework.version}</version>
+		</dependency>
+	</dependencies>
 
 	<build>
 		<sourceDirectory>src/main/java</sourceDirectory>
