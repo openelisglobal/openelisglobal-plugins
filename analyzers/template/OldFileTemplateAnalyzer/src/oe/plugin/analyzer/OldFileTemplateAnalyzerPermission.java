@@ -28,7 +28,7 @@ public class OldFileTemplateAnalyzerPermission extends PermissionPlugin {
     protected boolean insertPermission(){
         PluginPermissionService service = new PluginPermissionService();
         SystemModule module = service.getOrCreateSystemModule( "AnalyzerResults", "OldFileTemplateAnalyzer", "Results->Analyzer->OldFileTemplateAnalyzer" );
-        Role role = service.getSystemRole( "Results entry" );
+        Role role = service.getSystemRole( "Results" );
         return service.bindRoleToModule( role, module );
     }
 }

@@ -18,14 +18,13 @@
 
 	
 	<build>
-		<sourceDirectory>src/main/java</sourceDirectory>
+		<sourceDirectory>src</sourceDirectory>
 		<resources>
 			<resource>
-				<directory>src/main/filtered-resources</directory>
-				<filtering>true</filtering>
-			</resource>
-			<resource>
-				<directory>src/main/resources</directory>
+				<directory>src</directory>
+				<excludes>
+					<exclude>**/*.java</exclude>
+				</excludes>
 			</resource>
 		</resources>
 		<plugins>

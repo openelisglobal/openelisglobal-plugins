@@ -30,7 +30,7 @@ public class HttpHl7TemplateAnalyzerPermission extends PermissionPlugin {
 		IPluginPermissionService service = SpringContext.getBean(IPluginPermissionService.class);
 		SystemModule module = service.getOrCreateSystemModule("AnalyzerResults", "HttpHl7TemplateAnalyzer",
 				"Results->Analyzer->HttpHl7TemplateAnalyzer");
-        Role role = service.getSystemRole( "Results entry" );
+        Role role = service.getSystemRole( "Results" );
         return service.bindRoleToModule( role, module );
     }
 }

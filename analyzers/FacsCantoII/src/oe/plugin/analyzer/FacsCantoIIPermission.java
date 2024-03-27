@@ -28,8 +28,8 @@ public class FacsCantoIIPermission extends PermissionPlugin{
     protected boolean insertPermission(){
         PluginPermissionService service = new PluginPermissionService();
         SystemModule module = service.getOrCreateSystemModule( "AnalyzerResults", "FacsCantoII", "Results->Analyzer->FacsCantoII" );
-        Role role = service.getSystemRole( "Results Admin" );
-        //Role role = service.getSystemRole( "Results Entry" );
+        Role role = service.getSystemRole( "Results" );
+        //Role role = service.getSystemRole( "Results" );
         return service.bindRoleToModule( role, module );
     }
 }

@@ -30,7 +30,7 @@ public class SysmexXPAnalyzerPermission extends PermissionPlugin {
 		IPluginPermissionService service = SpringContext.getBean(IPluginPermissionService.class);
 		SystemModule module = service.getOrCreateSystemModule("AnalyzerResults", "SysmexXPAnalyzer",
 				"Results->Analyzer->SysmexXPAnalyzer");
-        Role role = service.getSystemRole( "Results entry" );
+        Role role = service.getSystemRole( "Results" );
         return service.bindRoleToModule( role, module );
     }
 }

@@ -28,7 +28,7 @@ public class SysmexXTPermission extends PermissionPlugin{
     protected boolean insertPermission(){
         PluginPermissionService service = new PluginPermissionService();
         SystemModule module = service.getOrCreateSystemModule( "AnalyzerResults", "SysmexXTAnalyzer", "Results->Analyzer->SysmexXTAnalyzer" );
-        Role role = service.getSystemRole( "Results Admin" );
+        Role role = service.getSystemRole( "Results" );
         return service.bindRoleToModule( role, module );
     }
 }

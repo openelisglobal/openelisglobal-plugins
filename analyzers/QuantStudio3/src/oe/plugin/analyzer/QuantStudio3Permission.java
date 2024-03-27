@@ -31,7 +31,7 @@ public class QuantStudio3Permission extends PermissionPlugin{
 		IPluginPermissionService service = SpringContext.getBean(IPluginPermissionService.class);
 		SystemModule module = service.getOrCreateSystemModule("AnalyzerResults", "QuantStudio3Analyzer",
 				"Results->Analyzer->QuantStudio3Analyzer");
-        Role role = service.getSystemRole( "Results entry" );
+        Role role = service.getSystemRole( "Results" );
         SystemModuleUrl moduleUrl = service.getOrCreateSystemModuleUrl(module, "/importAnalyzer");
         return service.bindRoleToModule( role, module, moduleUrl );
     }

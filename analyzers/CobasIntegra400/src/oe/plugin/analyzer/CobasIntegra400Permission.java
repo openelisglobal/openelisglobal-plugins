@@ -28,8 +28,8 @@ public class CobasIntegra400Permission extends PermissionPlugin{
     protected boolean insertPermission(){
         PluginPermissionService service = new PluginPermissionService();
         SystemModule module = service.getOrCreateSystemModule( "AnalyzerResults", "CobasIntegra400", "Results->Analyzer->CobasIntegra400" );
-        Role role = service.getSystemRole( "Results Admin" );
-        //Role role = service.getSystemRole( "Results entry" );
+        Role role = service.getSystemRole( "Results" );
+        //Role role = service.getSystemRole( "Results" );
         return service.bindRoleToModule( role, module );
     }
 }
