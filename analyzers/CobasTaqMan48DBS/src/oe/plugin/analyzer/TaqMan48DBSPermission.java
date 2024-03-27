@@ -28,7 +28,7 @@ public class TaqMan48DBSPermission extends PermissionPlugin{
     protected boolean insertPermission(){
         PluginPermissionService service = new PluginPermissionService();
         SystemModule module = service.getOrCreateSystemModule( "AnalyzerResults", "TaqMan48DBSAnalyzer", "Results->Analyzer->TaqMan48DBSAnalyzer" );
-        Role role = service.getSystemRole( "Results entry" );
+        Role role = service.getSystemRole( "Results" );
         return service.bindRoleToModule( role, module );
     }
 }

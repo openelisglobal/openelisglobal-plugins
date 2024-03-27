@@ -28,7 +28,7 @@ public class WeberPermission extends PermissionPlugin{
 	protected boolean insertPermission(){
 		PluginPermissionService service = new PluginPermissionService();
 		SystemModule module = service.getOrCreateSystemModule( "AnalyzerResults", "WeberAnalyzer", "Results->Analyzer->WeberAnalyzer" );
-		Role role = service.getSystemRole( "Results entry" );
+		Role role = service.getSystemRole( "Results" );
 		return service.bindRoleToModule( role, module );
 	}
 }

@@ -29,7 +29,7 @@ public class GeneXpertAnalyzerPermission extends PermissionPlugin {
         PluginPermissionService service = new PluginPermissionService();
 		SystemModule module = service.getOrCreateSystemModule("AnalyzerResults", "GeneXpertAnalyzer",
 				"Results->Analyzer->GeneXpertAnalyzer");
-        Role role = service.getSystemRole( "Results entry" );
+        Role role = service.getSystemRole( "Results" );
         return service.bindRoleToModule( role, module );
     }
 }
